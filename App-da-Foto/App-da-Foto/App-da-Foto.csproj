@@ -6,14 +6,30 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MaterialDesignThemes" Version="4.4.0" />
+    <PackageReference Include="Syncfusion.Xamarin.SfImageEditor" Version="20.1.0.50" />
+    <PackageReference Include="Xam.Plugin.Media" Version="5.0.1" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2401" />  
     <PackageReference Include="Xamarin.Essentials" Version="1.7.2" />  
-    <PackageReference Include="Xamarin.Forms.Maps" Version="5.0.0.2401" />
+    <PackageReference Include="Xamarin.Forms.Maps" Version="5.0.0.2401" />  
+    <PackageReference Include="Xamstrap" Version="0.1.0-pre01" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\NovoFotografoPage.xaml.cs">
+      <DependentUpon>NovoFotografoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\SobrePage.xaml.cs">
+      <DependentUpon>SobrePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\FotografoPerfilPage.xaml.cs">
+      <DependentUpon>FotografoPerfilPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\FotografosPage.xaml.cs">
+      <DependentUpon>FotografosPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

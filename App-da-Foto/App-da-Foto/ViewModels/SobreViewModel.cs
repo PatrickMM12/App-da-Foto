@@ -5,11 +5,11 @@ using Xamarin.Forms;
 
 namespace App_da_Foto.ViewModels
 {
-    public class AboutViewModel : BaseViewModel
+    public class SobreViewModel : BaseViewModel
     {
-        public AboutViewModel()
+        public SobreViewModel()
         {
-            Title = "About";
+            Title = "Sobre";
         }
 
         public ICommand OpenWebCommand { get; }

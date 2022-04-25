@@ -2,9 +2,9 @@
 
 namespace App_da_Foto.Views
 {
-	public partial class HomePage : ContentPage
+	public partial class SobrePage : ContentPage
 	{
-		public HomePage()
+		public SobrePage()
 		{
 			InitializeComponent();
 		}

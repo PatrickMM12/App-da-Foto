@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace App_da_Foto.Services
 {
-    public interface IDataStore<T>
-    {
-        Task<bool> AddItemAsync(T item);
-        Task<bool> UpdateItemAsync(T item);
-        Task<bool> DeleteItemAsync(string id);
-        Task<T> GetItemAsync(string id);
-        Task<IEnumerable<T>> GetItemsAsync(bool forceRefresh = false);
-    }
+	public interface IDataStore<T>
+	{
+		Task<bool> AddFotografoAsync(T fotografo);
+		Task<bool> UpdateFotografoAsync(T fotografo);
+		Task<bool> DeleteFotografoAsync(string id);
+		Task<T> GetFotografoAsync(string id);
+		Task<IEnumerable<T>> GetFotografosAsync(bool forceRefresh = false);
+	}
 }
