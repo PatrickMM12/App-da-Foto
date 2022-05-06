@@ -5,41 +5,59 @@
              Title="{Binding Title}"
              xmlns:local="clr-namespace:App_da_Foto.ViewModels"  
              xmlns:model="clr-namespace:App_da_Foto.Models" 
+             xmlns:Control="clr-namespace:Xamstrap;assembly=Xamstrap"
+             xmlns:Attached="clr-namespace:Xamstrap.AttachedProperties;assembly=Xamstrap"
              x:DataType="local:FotografosViewModel"
              x:Name="ListarFotografosPage">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Adicionar" Command="{Binding AddFotografoCommand}" />
-    </ContentPage.ToolbarItems>
-    <!--
-      x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.
-      https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/data-binding/compiled-bindings
-    -->
-    <RefreshView x:DataType="local:FotografosViewModel" Command="{Binding LoadFotografosCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
-        <CollectionView x:Name="FotografosView"
-                ItemsSource="{Binding Fotografos}"
-                SelectionMode="None">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <StackLayout Padding="10" x:DataType="model:Fotografo">
-                        <Label Text="{Binding Nome}" 
-                            LineBreakMode="NoWrap" 
-                            Style="{DynamicResource ListItemTextStyle}" 
-                            FontSize="16" />
-                        <Label Text="{Binding Especialidade}" 
-                            LineBreakMode="NoWrap"
-                            Style="{DynamicResource ListItemDetailTextStyle}"
-                            FontSize="13" />
-                        <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer 
+
+    <StackLayout HorizontalOptions="Center">
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Padding="10,10,10,15" Spacing="40">
+            <Grid Attached:ResponsiveProperty.Class="col-md-12" HeightRequest="50">
+                <Label  HorizontalOptions="End" VerticalOptions="Center" FontAttributes="Bold" Text="Nome"></Label>
+            </Grid>
+            <Grid Attached:ResponsiveProperty.Class="col-md-12" HeightRequest="50">
+                <Label  HorizontalOptions="Start" VerticalOptions="Center" FontAttributes="Bold" Text="Especialidade"></Label>
+            </Grid>
+        </StackLayout>
+
+        <RefreshView x:DataType="local:FotografosViewModel" 
+                 Command="{Binding LoadFotografosCommand}" 
+                 IsRefreshing="{Binding IsBusy, Mode=TwoWay}" 
+                 HorizontalOptions="Center">
+            <CollectionView x:Name="FotografosView"
+                    ItemsSource="{Binding Fotografos}"
+                    SelectionMode="Single"
+                    HorizontalOptions="Center">
+                    
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Spacing="10" Padding="120,10,10,10" x:DataType="model:Fotografo" 
+                            HorizontalOptions="Center" 
+                            Orientation="Horizontal" Attached:ResponsiveProperty.Class="row">
+                            <Grid Attached:ResponsiveProperty.Class="col-xs-6 col-md-4" HeightRequest="50">
+                                <Label HorizontalOptions="End" Text="{Binding Nome}" 
+                                    LineBreakMode="NoWrap"
+                                    Style="{DynamicResource ListItemTextStyle}" 
+                                    FontSize="20" />
+                            </Grid>
+                            <Grid Attached:ResponsiveProperty.Class="col-xs-6 col-md-4" HeightRequest="50">
+                                <Label HorizontalOptions="Start" Text="{Binding Especialidade}" 
+                                    LineBreakMode="NoWrap"
+                                    Style="{DynamicResource ListItemDetailTextStyle}"
+                                    FontSize="20" />
+                            </Grid>
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer 
                                 NumberOfTapsRequired="1"
                                 Command="{Binding Source={RelativeSource AncestorType={x:Type local:FotografosViewModel}}, Path=FotografoTapped}"		
                                 CommandParameter="{Binding .}">
-                            </TapGestureRecognizer>
-                        </StackLayout.GestureRecognizers>
-                    </StackLayout>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </RefreshView>
+                                </TapGestureRecognizer>
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+    </StackLayout>
 </ContentPage>

@@ -3,19 +3,27 @@ using Xamarin.Forms;
 
 namespace App_da_Foto.ViewModels
 {
-	public class LoginViewModel : BaseViewModel
-	{
-		public Command LoginCommand { get; }
+    public class LoginViewModel : BaseViewModel
+    {
+        public Command LoginCommand { get; }
+        public Command AddFotografoCommand { get; }
 
-		public LoginViewModel()
-		{
-			LoginCommand = new Command(OnLoginClicked);
-		}
+        public LoginViewModel()
+        {
+            LoginCommand = new Command(OnLoginClicked);
 
-		private async void OnLoginClicked(object obj)
-		{
-			// Prefixing with `//` switches to a different navigation stack instead of pushing to the active one
-			await Shell.Current.GoToAsync($"//{nameof(HomePage)}");
-		}
-	}
+            AddFotografoCommand = new Command(OnAdicionarFotografo);
+        }
+
+        private async void OnLoginClicked(object obj)
+        {
+            // Prefixing with `//` switches to a different navigation stack instead of pushing to the active one
+            await Shell.Current.GoToAsync($"//{nameof(HomePage)}");
+        }
+
+        private async void OnAdicionarFotografo(object obj)
+        {
+            await Shell.Current.GoToAsync(nameof(NovoFotografoPage));
+        }
+    }
 }
