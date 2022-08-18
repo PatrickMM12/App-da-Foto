@@ -4,13 +4,19 @@
              xmlns:viewmodels="clr-namespace:App_da_Foto.ViewModels" 
              x:DataType="viewmodels:FotografoPerfilViewModel"
              x:Class="App_da_Foto.Views.FotografoPerfilPage"
-             Title="{Binding Title}">
+             Title="{Binding Nome}"
+             Visual="Material">
 
-    <StackLayout Spacing="20" Padding="15">
-        <Label Text="Nome:" FontSize="Medium" />
-        <Label Text="{Binding Nome}" FontSize="Small"/>
-        <Label Text="Fotografo:" FontSize="Medium" />
-        <Label Text="{Binding Especialidade}" FontSize="Small"/>
+    <StackLayout Spacing="40" Padding="15,30,15,15">
+        <StackLayout>
+            <Label HorizontalOptions="Center" Text="Nome do Fotógrafo" FontSize="Large"/>
+            <Label HorizontalOptions="Center" Text="{Binding Nome}" FontSize="35" FontAttributes="Bold"/>
+        </StackLayout>
+
+        <StackLayout>
+            <Label HorizontalOptions="Center" Text="Especialidade" FontSize="Large" />
+            <Label HorizontalOptions="Center" Text="{Binding Especialidade}" FontSize="35" FontAttributes="Bold"/>
+        </StackLayout>
     </StackLayout>
     
 </ContentPage>

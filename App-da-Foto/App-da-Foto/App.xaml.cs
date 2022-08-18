@@ -1,19 +1,15 @@
-﻿using App_da_Foto.Services;
-using App_da_Foto.Views;
-using System;
+﻿using Repositories;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace App_da_Foto
 {
     public partial class App : Application
     {
-
         public App()
         {
             InitializeComponent();
 
-            DependencyService.Register<MockDataStore>();
+            DependencyService.Register<FotografoRepositorio>();
             MainPage = new AppShell();
         }
 

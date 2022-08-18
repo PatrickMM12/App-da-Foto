@@ -7,7 +7,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App-da-Foto.Android", "App-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App-da-Foto.iOS", "App-da-Foto\App-da-Foto.iOS\App-da-Foto.iOS.csproj", "{8FF178A3-4E58-41FC-BB6F-4E0D98E725DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App-da-Foto", "App-da-Foto\App-da-Foto\App-da-Foto.csproj", "{DAC79FA6-3140-4E10-A4B5-B927C0C75D3B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App-da-Foto", "App-da-Foto\App-da-Foto\App-da-Foto.csproj", "{DAC79FA6-3140-4E10-A4B5-B927C0C75D3B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{A63AE8C8-9C0E-4BD0-9AFD-5CF716072AFB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "APP", "APP", "{956D21BE-1EC3-4765-952C-E020FBEF30C6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FotografosAPI", "..\FotografosAPI\FotografosAPI\FotografosAPI.csproj", "{D76FA53C-6183-48D8-A367-C2E10896EB9E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,9 +79,27 @@ Global
 		{DAC79FA6-3140-4E10-A4B5-B927C0C75D3B}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{DAC79FA6-3140-4E10-A4B5-B927C0C75D3B}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{DAC79FA6-3140-4E10-A4B5-B927C0C75D3B}.Release|iPhoneSimulator.Deploy.0 = Release|Any CPU
+		{D76FA53C-6183-48D8-A367-C2E10896EB9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D76FA53C-6183-48D8-A367-C2E10896EB9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D76FA53C-6183-48D8-A367-C2E10896EB9E}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{D76FA53C-6183-48D8-A367-C2E10896EB9E}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{D76FA53C-6183-48D8-A367-C2E10896EB9E}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{D76FA53C-6183-48D8-A367-C2E10896EB9E}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{D76FA53C-6183-48D8-A367-C2E10896EB9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D76FA53C-6183-48D8-A367-C2E10896EB9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D76FA53C-6183-48D8-A367-C2E10896EB9E}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{D76FA53C-6183-48D8-A367-C2E10896EB9E}.Release|iPhone.Build.0 = Release|Any CPU
+		{D76FA53C-6183-48D8-A367-C2E10896EB9E}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{D76FA53C-6183-48D8-A367-C2E10896EB9E}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BBF321C1-0EE8-4062-A277-F6D59328EAB0} = {956D21BE-1EC3-4765-952C-E020FBEF30C6}
+		{8FF178A3-4E58-41FC-BB6F-4E0D98E725DD} = {956D21BE-1EC3-4765-952C-E020FBEF30C6}
+		{DAC79FA6-3140-4E10-A4B5-B927C0C75D3B} = {956D21BE-1EC3-4765-952C-E020FBEF30C6}
+		{D76FA53C-6183-48D8-A367-C2E10896EB9E} = {A63AE8C8-9C0E-4BD0-9AFD-5CF716072AFB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A16EC4EF-7314-4F65-9648-D3544D84CD56}

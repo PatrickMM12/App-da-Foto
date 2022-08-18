@@ -5,11 +5,9 @@
              xmlns:vm="clr-namespace:App_da_Foto.ViewModels" 
              xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps" 
              x:DataType="vm:HomeViewModel"
-             Title="{Binding Title}">
-    
-    <ContentPage.BindingContext>
-        <vm:HomeViewModel />
-    </ContentPage.BindingContext>
+             Title="{Binding Title}"
+             Visual="Material"
+             >
     
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -18,6 +16,24 @@
     </ContentPage.Resources>
 
     <StackLayout BackgroundColor="{StaticResource Accent}" VerticalOptions="FillAndExpand" HorizontalOptions="Fill">
-        <maps:Map IsShowingUser="True" />
+        <maps:Map IsShowingUser="True"
+                  HasScrollEnabled="True" 
+                  Visual="Material" 
+                  MoveToLastRegionOnLayoutChange="True">
+            <x:Arguments>
+                <maps:MapSpan>
+                    <x:Arguments>
+                        <maps:Position>
+                            <x:Arguments>
+                                <x:Double>-23.5499158</x:Double>
+                                <x:Double>-46.6334289</x:Double>
+                            </x:Arguments>
+                        </maps:Position>
+                        <x:Double>0.01</x:Double>
+                        <x:Double>0.01</x:Double>
+                    </x:Arguments>
+                </maps:MapSpan>
+            </x:Arguments>
+        </maps:Map>
     </StackLayout>
 </ContentPage>

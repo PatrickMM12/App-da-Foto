@@ -3,14 +3,42 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:Control="clr-namespace:Xamstrap;assembly=Xamstrap"
+             xmlns:Attached="clr-namespace:Xamstrap.AttachedProperties;assembly=Xamstrap"
              xmlns:viewmodels="clr-namespace:App_da_Foto.ViewModels" 
              x:DataType="viewmodels:LoginViewModel"
              mc:Ignorable="d"
              x:Class="App_da_Foto.Views.LoginPage"
-             Shell.NavBarIsVisible="False">
-    <ContentPage.Content>
-        <StackLayout Padding="10,20,10,40" VerticalOptions="EndAndExpand">
-            <Button VerticalOptions="Center" Text="Estou procurando um fotógrafo!" Command="{Binding LoginCommand}"/>
+             Shell.NavBarIsVisible="False"
+             Visual="Material">
+
+    <StackLayout Attached:ResponsiveProperty.Class="form-basic" Padding="20,70,20,30" Spacing="10" VerticalOptions="Center">
+
+        <StackLayout Padding="0,0,0,15">
+            <Entry Placeholder="E-mail"
+                   BackgroundColor="Transparent"/>
+            <Entry Placeholder="Senha" IsPassword="True"
+                   BackgroundColor="Transparent"/>
+            <Button Text="Entrar como Fotógrafo"
+                    FontSize="Subtitle"
+                    Attached:ResponsiveProperty.Class="btn-sm btn-primary"
+                    HeightRequest="60"
+                    Padding="0,10,0,0"/>
         </StackLayout>
-    </ContentPage.Content>
+        
+        <Button Text="Cadastrar-me como Fotógrafo" 
+                Command="{Binding AddFotografoCommand}" 
+                Attached:ResponsiveProperty.Class="btn-info"
+                HeightRequest="40"/>
+
+        <StackLayout Padding="0,100,0,30" VerticalOptions="EndAndExpand">
+            <Button Text="Encontre um fotógrafo" 
+                    FontSize="Title"
+                    Command="{Binding LoginCommand}" 
+                    Attached:ResponsiveProperty.Class="btn-lg btn-success"
+                    HeightRequest="80"
+                    BackgroundColor="Green"/>
+        </StackLayout>
+    </StackLayout>
+    
 </ContentPage>
