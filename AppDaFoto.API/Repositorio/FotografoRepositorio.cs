@@ -1,4 +1,5 @@
 ﻿using app_da_foto.Domain.Model;
+using Repositorio.Interfaces;
 
 namespace Repositorio
 {
