@@ -17,7 +17,7 @@ namespace app_da_foto.Domain.Model
 
         public string Instagram { get; set; }
 
-        public int Acessosinstagram { get; set; }
+        public int AcessosInstagram { get; set; }
 
         public int IdFotografo { get; set; }
 
