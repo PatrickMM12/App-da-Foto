@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+using Repositorio;
 
 namespace app_da_foto.API
 {
@@ -7,44 +7,47 @@ namespace app_da_foto.API
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            //DalHelper.DefaultConnection = ConfigurationExtensions.GetConnectionString(this.Configuration, "DefaultConnection");
         }
-
-        string MyAllowSpecificOrigin = "_myAllowSpecificOrigins";
 
         public IConfiguration Configuration { get; }
 
-        // Add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy("_myAllowSpecificOrigins",
-                    builder => builder
-                    .AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    );
-            });
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy("_myAllowSpecificOrigins",
+            //        builder => builder
+            //        .AllowAnyOrigin()
+            //        .AllowAnyMethod()
+            //        .AllowAnyHeader()
+            //        );
+            //});
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
+                app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
 
-            app.UseCors(MyAllowSpecificOrigin);
-
             app.UseHttpsRedirection();
+
+            app.UseRouting();
 
             app.UseAuthorization();
 
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }
