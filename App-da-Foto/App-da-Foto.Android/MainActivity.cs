@@ -7,7 +7,7 @@ using Android.Runtime;
 
 namespace App_da_Foto.Droid
 {
-    [Activity(Label = "App_da_Foto", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize)]
+    [Activity(Theme = "@style/MainTheme", MainLauncher = false)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
 
