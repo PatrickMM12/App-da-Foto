@@ -3,18 +3,23 @@ using Xamarin.Forms;
 
 namespace App_da_Foto.Views
 {
-    public partial class HomePage : ContentPage
+    public partial class HomePage : Shell
     {
         public HomePage()
         {
             InitializeComponent();
-            BindingContext = new HomeViewModel();
-        }
 
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            //Map.GetActualLocationCommand.Execute(null);
+            Routing.RegisterRoute(nameof(FotografoPerfilPage), typeof(FotografoPerfilPage));
+            Routing.RegisterRoute(nameof(NovoFotografoPage), typeof(NovoFotografoPage));
+            Routing.RegisterRoute(nameof(BuscarLugarPage), typeof(BuscarLugarPage));
+            Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
+
+            BindingContext = new HomeViewModel();
+
+            if (App.Current.Properties.ContainsKey("Fotografo"))
+            {
+                CurrentItem = mapa;
+            }
         }
     }
 }
