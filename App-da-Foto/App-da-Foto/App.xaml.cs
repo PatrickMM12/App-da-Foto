@@ -1,4 +1,6 @@
-﻿using Repositories;
+﻿using App_da_Foto.Views;
+using Repositories;
+using System;
 using Xamarin.Forms;
 
 namespace App_da_Foto
@@ -9,8 +11,7 @@ namespace App_da_Foto
         {
             InitializeComponent();
 
-            DependencyService.Register<FotografoRepositorio>();
-            MainPage = new AppShell();
+            MainPage = new HomePage();
         }
 
         protected override void OnStart()
