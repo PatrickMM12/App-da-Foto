@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:Control="clr-namespace:Xamstrap;assembly=Xamstrap"
+             xmlns:Attached="clr-namespace:Xamstrap.AttachedProperties;assembly=Xamstrap"
+             mc:Ignorable="d"
+             x:Class="App_da_Foto.Views.SairPage"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.Content>
+
+        <Grid VerticalOptions="CenterAndExpand" 
+              RowSpacing="10"
+              ColumnSpacing="10"
+              Padding="20,0"
+              ColumnDefinitions="*,*"
+              RowDefinitions="*">
+
+            <Label Text="Deseja realmente sair?"
+                   FontSize="25"
+                   Grid.Row="3" Grid.Column="0"
+                   Grid.ColumnSpan="2"/>
+            
+
+            <Button Text="Sim"
+                    Clicked="Sair"
+                    FontSize="15"
+                    Grid.Column="1" Grid.Row="5"/>
+
+            <Button Text="Não" StyleClass="BotaoAmarelo"
+                    FontSize="15"
+                    Clicked="Voltar"
+                    Grid.Column="0" Grid.Row="5"/>
+        </Grid>
+        
+    </ContentPage.Content>
+    
+</ContentPage>
