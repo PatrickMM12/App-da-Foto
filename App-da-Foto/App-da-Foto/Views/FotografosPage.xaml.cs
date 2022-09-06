@@ -1,4 +1,5 @@
-﻿using App_da_Foto.Models;
+﻿using app_da_foto.Domain.Model;
+using App_da_Foto.Models;
 using App_da_Foto.ViewModels;
 using Repositories;
 using System.Collections.Generic;

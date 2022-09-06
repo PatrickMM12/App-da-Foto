@@ -2,63 +2,120 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="App_da_Foto.Views.FotografosPage"
-             Title="{Binding Title}"
+             Title="Buscar Fotógrafo"
              xmlns:local="clr-namespace:App_da_Foto.ViewModels"  
-             xmlns:model="clr-namespace:App_da_Foto.Models" 
+             xmlns:model="clr-namespace:app_da_foto.Domain.Model;assembly=app-da-foto.domain" 
              xmlns:Control="clr-namespace:Xamstrap;assembly=Xamstrap"
              xmlns:Attached="clr-namespace:Xamstrap.AttachedProperties;assembly=Xamstrap"
              x:DataType="local:FotografosViewModel"
              x:Name="ListarFotografosPage"
-             Visual="Material">
+             Shell.NavBarIsVisible="False">
 
-
-    <StackLayout HorizontalOptions="Center">
-        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Padding="10,10,10,15" Spacing="40">
-            <Grid Attached:ResponsiveProperty.Class="col-md-12" HeightRequest="50">
-                <Label  HorizontalOptions="End" VerticalOptions="Center" FontAttributes="Bold" Text="Nome"></Label>
-            </Grid>
-            <Grid Attached:ResponsiveProperty.Class="col-md-12" HeightRequest="50">
-                <Label  HorizontalOptions="Start" VerticalOptions="Center" FontAttributes="Bold" Text="Especialidade"></Label>
-            </Grid>
-        </StackLayout>
+    <ContentPage.Content>
 
         <RefreshView x:DataType="local:FotografosViewModel" 
-                 Command="{Binding LoadFotografosCommand}" 
-                 IsRefreshing="{Binding IsBusy, Mode=TwoWay}" 
-                 HorizontalOptions="Center">
+                     Command="{Binding LoadFotografosCommand}" 
+                     IsRefreshing="{Binding IsBusy}"
+                     RefreshColor="{StaticResource Amarelo}">
+
             <CollectionView x:Name="FotografosView"
-                    ItemsSource="{Binding Fotografos}"
-                    SelectionMode="Single"
-                    HorizontalOptions="Center">
-                    
+                            ItemsSource="{Binding Fotografos}"
+                            SelectionMode="Single"
+                            VerticalScrollBarVisibility="Default">
+                
+                <CollectionView.Header>
+                    <StackLayout>
+                        <Label Text="Fotógrafos" 
+                                   FontSize="40"
+                                   FontAttributes="Bold"/>
+
+                        <BoxView BackgroundColor="{StaticResource Preto}"
+                                     HeightRequest="1"
+                                     Margin="15"/>
+
+                    </StackLayout>
+                </CollectionView.Header>
+
                 <CollectionView.ItemTemplate>
+
                     <DataTemplate>
-                        <StackLayout Spacing="10" Padding="120,10,10,10" x:DataType="model:Fotografo" 
-                            HorizontalOptions="Center" 
-                            Orientation="Horizontal" Attached:ResponsiveProperty.Class="row">
-                            <Grid Attached:ResponsiveProperty.Class="col-xs-6 col-md-4" HeightRequest="50">
-                                <Label HorizontalOptions="End" Text="{Binding Nome}" 
-                                    LineBreakMode="NoWrap"
-                                    Style="{DynamicResource ListItemTextStyle}" 
-                                    FontSize="20" />
-                            </Grid>
-                            <Grid Attached:ResponsiveProperty.Class="col-xs-6 col-md-4" HeightRequest="50">
-                                <Label HorizontalOptions="Start" Text="{Binding Especialidade}" 
-                                    LineBreakMode="NoWrap"
-                                    Style="{DynamicResource ListItemDetailTextStyle}"
-                                    FontSize="20" />
-                            </Grid>
-                            <StackLayout.GestureRecognizers>
-                                <TapGestureRecognizer 
-                                NumberOfTapsRequired="1"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:FotografosViewModel}}, Path=FotografoTapped}"		
-                                CommandParameter="{Binding .}">
-                                </TapGestureRecognizer>
-                            </StackLayout.GestureRecognizers>
-                        </StackLayout>
+                        <Grid x:DataType="model:Fotografo" RowDefinitions="150" Padding="10,5">
+
+                            <Frame BackgroundColor="{StaticResource Cinza}"
+                                       CornerRadius="10"
+                                       HasShadow="False">
+                                <Grid ColumnDefinitions="110,*" 
+                                          Padding="0" 
+                                          RowSpacing="0">
+
+                                    <Frame BackgroundColor="{StaticResource Branco}"
+                                               CornerRadius="100"
+                                               Grid.Column="0"
+                                               Grid.RowSpan="3"
+                                               HasShadow="False">
+                                        <Image Source="perfil" />
+                                    </Frame>
+
+                                    <StackLayout Grid.Column="1">
+                                        <Label Text="{Binding Nome}"
+                                                   HorizontalOptions="Start"
+                                                   VerticalOptions="Start"
+                                                   LineBreakMode="NoWrap"
+                                                   Style="{DynamicResource ListItemTextStyle}" 
+                                                   FontSize="25"
+                                                   FontAttributes="Bold"/>
+
+                                        <Label Text="Especialidade:" 
+                                                   HorizontalOptions="Start"
+                                                   VerticalOptions="End"
+                                                   Margin="0,15,0,0"
+                                                   Style="{DynamicResource ListItemDetailTextStyle}"
+                                                   FontSize="13"/>
+
+                                        <Frame Padding="0" 
+                                                   BackgroundColor="{StaticResource Amarelo}"
+                                                   Margin="5,0"
+                                                   CornerRadius="20"
+                                                   HasShadow="False"
+                                                   HorizontalOptions="StartAndExpand"
+                                                   >
+                                            <Label Text="{Binding Especialidade}" 
+                                                       HorizontalOptions="Center"
+                                                       Style="{DynamicResource ListItemDetailTextStyle}"
+                                                       FontSize="17"
+                                                   FontAttributes="Bold"
+                                                       Margin="3"/>
+
+                                        </Frame>
+
+                                        <!--
+                                            <ScrollView Orientation="Horizontal" 
+                                                        HorizontalScrollBarVisibility="Never">
+                                                <FlexLayout BindableLayout.ItemsSource="{Binding Lista de Especialidades }" Wrap="NoWrap">
+                                                    <BindableLayout.ItemTemplate>
+                                                        <DataTemplate>
+
+                                                        </DataTemplate>
+                                                    </BindableLayout.ItemTemplate>
+                                                </FlexLayout>
+                                            </ScrollView>
+                                            -->
+
+                                    </StackLayout>
+
+                                </Grid>
+
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                              Command="{Binding Source={RelativeSource AncestorType={x:Type local:FotografosViewModel}}, Path=FotografoTapped}"		
+                                                              CommandParameter="{Binding .}"/>
+                                </Frame.GestureRecognizers>
+                            </Frame>
+
+                        </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </RefreshView>
-    </StackLayout>
+    </ContentPage.Content>
 </ContentPage>

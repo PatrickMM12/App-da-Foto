@@ -1,4 +1,6 @@
-﻿using App_da_Foto.Models;
+﻿using app_da_foto.Domain.Model;
+using App_da_Foto.Models;
+using App_da_Foto.Services;
 using App_da_Foto.Views;
 using System;
 using System.Collections.ObjectModel;
@@ -11,6 +13,7 @@ namespace App_da_Foto.ViewModels
     public class FotografosViewModel : BaseViewModel
     {
         private Fotografo _fotografoSelecionado;
+        private FotografoService _fotografoService;
 
         public ObservableCollection<Fotografo> Fotografos { get; }
         public Command LoadFotografosCommand { get; }
@@ -33,7 +36,8 @@ namespace App_da_Foto.ViewModels
             try
             {
                 Fotografos.Clear();
-                var fotografos = await DataStore.GetFotografosAsync();
+                //var fotografos = await DataStore.GetFotografosAsync();
+                var fotografos = await _fotografoService.ObterFotografos();
                 foreach (var fotografo in fotografos)
                 {
                     Fotografos.Add(fotografo);
@@ -51,7 +55,7 @@ namespace App_da_Foto.ViewModels
 
         public void OnAparecendo()
         {
-            IsBusy = true;
+            IsBusy = false;
             FotografoSelecionado = null;
         }
 
