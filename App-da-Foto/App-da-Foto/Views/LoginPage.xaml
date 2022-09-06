@@ -9,36 +9,48 @@
              x:DataType="viewmodels:LoginViewModel"
              mc:Ignorable="d"
              x:Class="App_da_Foto.Views.LoginPage"
-             Shell.NavBarIsVisible="False"
-             Visual="Material">
+             Shell.NavBarIsVisible="False">
 
-    <StackLayout Attached:ResponsiveProperty.Class="form-basic" Padding="20,70,20,30" Spacing="10" VerticalOptions="Center">
-
-        <StackLayout Padding="0,0,0,15">
-            <Entry Placeholder="E-mail"
-                   BackgroundColor="Transparent"/>
-            <Entry Placeholder="Senha" IsPassword="True"
-                   BackgroundColor="Transparent"/>
-            <Button Text="Entrar como Fotógrafo"
-                    FontSize="Subtitle"
-                    Attached:ResponsiveProperty.Class="btn-sm btn-primary"
-                    HeightRequest="60"
-                    Padding="0,10,0,0"/>
-        </StackLayout>
+    <ContentPage.Content>
         
-        <Button Text="Cadastrar-me como Fotógrafo" 
-                Command="{Binding AddFotografoCommand}" 
-                Attached:ResponsiveProperty.Class="btn-info"
-                HeightRequest="40"/>
+        <Grid VerticalOptions="CenterAndExpand" 
+              RowSpacing="10"
+              ColumnSpacing="10"
+              Padding="20,0"
+              ColumnDefinitions="*"
+              RowDefinitions="*">
+            
+            <Frame StyleClass="EntryFrame" 
+                   Grid.Row="1" Grid.ColumnSpan="2">
+                <Entry x:Name="entryEmail"
+                       Placeholder="E-mail" 
+                       Keyboard="Email"
+                       ReturnType="Next"/>
+            </Frame>
 
-        <StackLayout Padding="0,100,0,30" VerticalOptions="EndAndExpand">
-            <Button Text="Encontre um fotógrafo" 
-                    FontSize="Title"
-                    Command="{Binding LoginCommand}" 
-                    Attached:ResponsiveProperty.Class="btn-lg btn-success"
-                    HeightRequest="80"
-                    BackgroundColor="Green"/>
-        </StackLayout>
-    </StackLayout>
+            <Frame StyleClass="EntryFrame"
+                   Grid.Row="2" Grid.ColumnSpan="2">
+                <Entry x:Name="entrySenha"
+                       Placeholder="Senha" 
+                       IsPassword="True"
+                       ReturnType="Done"/>
+            </Frame>
+
+            <Button Text="Entrar como Fotógrafo"
+                    Clicked="Login_Fotografo"
+                    Grid.Column="1" Grid.Row="3"/>
+
+            <Button Text="Cadastrar-me como Fotógrafo" 
+                    Clicked="Cadastrar_Fotografo"
+                    Grid.Column="0" Grid.Row="3"/>
+
+            <Button StyleClass="BotaoAmarelo"
+                    Text="Encontre um Fotógrafo"
+                    FontSize="20"
+                    Clicked="Encontre_Fotografo"
+                    Grid.Row="6" Grid.ColumnSpan="2" Grid.RowSpan="1"/>
+        </Grid>
+        
+    </ContentPage.Content>
     
 </ContentPage>
