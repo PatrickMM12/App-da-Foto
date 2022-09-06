@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace App_da_Foto.Servicos
+namespace App_da_Foto.Services
 {
     public class GoogleMapsApiService : IGoogleMapsApiService
     {
