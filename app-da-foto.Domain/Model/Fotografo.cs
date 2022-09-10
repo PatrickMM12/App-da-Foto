@@ -15,11 +15,9 @@ namespace app_da_foto.Domain.Model
         [Required]
         public string Especialidade { get; set; }
 
-        [Required]
         [MaxLength(1)]
         public string Sexo { get; set; }
 
-        [Required]
         public DateTime Nascimento { get; set; }
 
         [Required]

@@ -9,10 +9,13 @@ namespace app_da_foto.Domain.Model
         [Key]
         public int Id { get; set; }
 
+        [Required]
         public string NomeArquivo { get; set; }
 
+        [Required]
         public string Imagem { get; set; }
 
+        [Required]
         public string MIME { get; set; }
 
 
@@ -21,6 +24,7 @@ namespace app_da_foto.Domain.Model
 
         public string Perfil { get; set; }
 
+        [Required]
         public int IdFotografo { get; set; }
 
         [ForeignKey("IdFotografo")]

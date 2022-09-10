@@ -29,6 +29,7 @@ namespace app_da_foto.Domain.Model
         [Required]
         public string Cep { get; set; }
 
+        [Required]
         public int IdFotografo { get; set; }
 
         [ForeignKey("IdFotografo")]

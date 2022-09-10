@@ -19,6 +19,7 @@ namespace app_da_foto.Domain.Model
 
         public int AcessosInstagram { get; set; }
 
+        [Required]
         public int IdFotografo { get; set; }
 
         [ForeignKey("IdFotografo")]
