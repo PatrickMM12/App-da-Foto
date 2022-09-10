@@ -1,4 +1,6 @@
-﻿using App_da_Foto.Models;
+﻿using app_da_foto.Domain.Model;
+using App_da_Foto.Models;
+using App_da_Foto.Services;
 using Repositories;
 using System;
 using System.Collections.Generic;
@@ -11,6 +13,7 @@ namespace App_da_Foto.ViewModels
     public class BaseViewModel : INotifyPropertyChanged
     {
         public IFotografoRepositorio<Fotografo> DataStore => DependencyService.Get<IFotografoRepositorio<Fotografo>>();
+        protected FotografoService fotografoService;
 
         bool isBusy = false;
         public bool IsBusy
@@ -24,6 +27,12 @@ namespace App_da_Foto.ViewModels
         {
             get { return title; }
             set { SetProperty(ref title, value); }
+        }
+
+        internal FotografoService FotografoService 
+        { 
+            get => fotografoService; 
+            set => fotografoService = value; 
         }
 
         protected bool SetProperty<T>(ref T backingStore, T value,
