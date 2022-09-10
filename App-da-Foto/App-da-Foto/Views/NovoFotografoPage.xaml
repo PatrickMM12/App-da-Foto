@@ -1,106 +1,71 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
-             ios:Page.UseSafeArea="true"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             xmlns:control="clr-namespace:App_da_Foto.Utilities.CustomView"
+             xmlns:viewModel="clr-namespace:App_da_Foto.ViewModels"
+             x:DataType="viewModel:NovoFotografoViewModel"
              x:Class="App_da_Foto.Views.NovoFotografoPage"
-             Shell.PresentationMode="ModalAnimated"
-             Title="Novo Fotografo">
-                
-    <ContentPage.Content>
-        <StackLayout Spacing="3" Padding="20,30,20,10">
-            <Label Text="Nome" FontSize="Medium" />
-            <Entry Text="{Binding Nome, Mode=TwoWay}" FontSize="Medium" />
-            <Label Text="Especialidade" FontSize="Medium" />
-            <Editor Text="{Binding Especialidade, Mode=TwoWay}" AutoSize="TextChanges" FontSize="Medium" Margin="0" />
-            <Label Text="E-mail" FontSize="Medium" />
-            <Editor Text="{Binding Email, Mode=TwoWay}" AutoSize="TextChanges" FontSize="Medium" Margin="0" />
-            <Label Text="Senha" FontSize="Medium" />
-            <Editor Text="{Binding Senha, Mode=TwoWay}" AutoSize="TextChanges" FontSize="Medium" Margin="0" />
-            <StackLayout>
-                <Label Text="Endereço" FontSize="Medium" />
-                <Entry x:Name="entry">
-                    <Entry.GestureRecognizers>
-                        <TapGestureRecognizer 
-                                Tapped="OnEnterAddressTapped" 
-                                />
-                    </Entry.GestureRecognizers>
-                </Entry>
-                <StackLayout.GestureRecognizers>
-                    <TapGestureRecognizer 
-                                Tapped="OnEnterAddressTapped" />
-                </StackLayout.GestureRecognizers>
-            </StackLayout>
+             ios:Page.UseSafeArea="true"
+             Title="Novo Fotografo"
+             Shell.NavBarIsVisible="False">
 
-            <ListView VerticalOptions="FillAndExpand"
-                        BackgroundColor="LightGray"
-                        Grid.Row="1"
-                        Footer=""
-                        SelectedItem="{Binding PlaceSelected, Mode=TwoWay}"
-                        x:Name="list"
-                        ItemsSource="{Binding Places}"
-                        HasUnevenRows="true"
-                        SeparatorColor="Gray"
-                        ios:ListView.SeparatorStyle="FullWidth">
-                <ListView.Triggers>
-                    <DataTrigger TargetType="ListView"
-                                 Binding="{Binding ShowRecentPlaces}"
-                                 Value="True">
-                        <Setter Property="ItemsSource" Value="{Binding RecentPlaces}" />
-                    </DataTrigger>
-                    <DataTrigger TargetType="ListView"
-                                 Binding="{Binding ShowRecentPlaces}"
-                                 Value="False">
-                        <Setter Property="ItemsSource" Value="{Binding Places}" />
-                    </DataTrigger>
-                </ListView.Triggers>
+    <Grid VerticalOptions="StartAndExpand" 
+              RowSpacing="10" 
+              Padding="20,0">
 
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Grid Padding="15"
-                                      RowSpacing="2"
-                                      ColumnSpacing="15">
+        <Frame StyleClass="EntryFrame" 
+                   Grid.Row="3" Grid.ColumnSpan="2">
+            <Entry Text="{Binding Nome}"
+                       Placeholder="Nome" 
+                       ReturnType="Next"
+                       Keyboard="Text"
+                       ClearButtonVisibility="WhileEditing"/>
+        </Frame>
 
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
+        <Frame  StyleClass="EntryFrame"
+                    Grid.Row="4" Grid.ColumnSpan="2">
+            <control:BindablePicker Title="Selecione sua Especialidade"
+                                    FontSize="15"
+                                    ItemsSource="{Binding ListaEspecialidade}"
+                                    SelectedItem="{Binding Especialidade, Mode=TwoWay}"/>
+        </Frame>
 
-                                <Image Source="ic_location"
-                                             HeightRequest="20"
-                                             WidthRequest="20"
-                                             VerticalOptions="Start"
-                                             Grid.Row="0"
-                                             Grid.Column="0"
-                                             Grid.RowSpan="2"/>
+        <Frame StyleClass="EntryFrame" 
+                   Grid.Row="5" Grid.ColumnSpan="2">
+            <Entry Text="{Binding Email}"
+                       Placeholder="E-mail"
+                       ReturnType="Next"
+                       Keyboard="Email"
+                       ClearButtonVisibility="WhileEditing"/>
+        </Frame>
 
-                                <Label LineBreakMode="MiddleTruncation"
-                                               Text="{Binding StructuredFormatting.MainText}"
-                                               Grid.Row="0"
-                                               Grid.Column="1"/>
+        <Frame StyleClass="EntryFrame"
+                   Grid.Row="6" Grid.ColumnSpan="2">
+            <Entry Text="{Binding Senha}"
+                       Placeholder="Senha"
+                       IsPassword="True"
+                       ReturnType="Done"
+                       ClearButtonVisibility="WhileEditing"/>
+        </Frame>
+        
+        <Label x:Name="TxtMessages" 
+                   Text="{Binding Message, Mode=OneWay}"
+                   TextColor="OrangeRed"
+                   Grid.Row="7" Grid.ColumnSpan="2"/>
 
-                                <Label LineBreakMode="MiddleTruncation"
-                                                 Text="{Binding StructuredFormatting.SecondaryText}" 
-                                                 TextColor="Gray" 
-                                                 Grid.Row="1"
-                                                 Grid.Column="1"/>
-                            </Grid>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
+        <Button Text="Voltar" 
+                    Command="{Binding CancelCommand}" 
+                    HorizontalOptions="FillAndExpand"
+                    Grid.Row="9"/>
 
-            </ListView>
+        <Button Text="Cadastrar" 
+                    TextColor="{StaticResource Preto}"
+                    BackgroundColor="{StaticResource Amarelo}"
+                    Command="{Binding SaveCommand}" 
+                    HorizontalOptions="FillAndExpand" 
+                    Grid.Row="9" Grid.Column="1"/>
 
-            <StackLayout Orientation="Horizontal">
-                <Button Text="Cancelar" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
-                <Button Text="Salvar" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
-            </StackLayout>
-        </StackLayout>
-    </ContentPage.Content>
-    
+    </Grid>
+
 </ContentPage>
