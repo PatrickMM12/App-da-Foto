@@ -1,11 +1,13 @@
-﻿using System;
+﻿using app_da_foto.Domain.Model;
+using App_da_Foto.Models;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 
 namespace App_da_Foto.Services
 {
-    class Service
+    public class Service
     {
         protected HttpClient _client;
         protected string BaseApiUrl = "https://appdafotoapi.azurewebsites.net/";
