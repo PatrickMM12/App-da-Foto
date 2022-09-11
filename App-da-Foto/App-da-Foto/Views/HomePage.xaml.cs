@@ -13,6 +13,8 @@ namespace App_da_Foto.Views
             Routing.RegisterRoute(nameof(NovoFotografoPage), typeof(NovoFotografoPage));
             Routing.RegisterRoute(nameof(BuscarLugarPage), typeof(BuscarLugarPage));
             Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
+            Routing.RegisterRoute(nameof(SobrePage), typeof(SobrePage));
+            Routing.RegisterRoute(nameof(SairPage), typeof(SairPage));
 
             BindingContext = new HomeViewModel();
 

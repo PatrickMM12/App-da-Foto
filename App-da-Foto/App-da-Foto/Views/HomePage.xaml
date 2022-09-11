@@ -84,14 +84,14 @@
     <ShellItem Route="LoginPage">
         <ShellContent ContentTemplate="{DataTemplate page:LoginPage}"/>
     </ShellItem>
-
+    
     <TabBar Route="HomePage">
 
-        <Tab Title="Sobre" 
+        <!--Tab Title="Sobre" 
              Icon="info_24"
              Shell.PresentationMode="Modal">
             <ShellContent ContentTemplate="{DataTemplate page:SobrePage}"/>
-        </Tab>
+        </Tab-->
 
         <Tab Title="Fotógrafos" 
              Icon="busca_pessoa_24">
@@ -105,11 +105,20 @@
             <ShellContent ContentTemplate="{DataTemplate page:MapaPage}"/>
         </Tab>
 
-        <Tab Title="Sair"
-             Icon="saida_24">
-            <ShellContent ContentTemplate="{DataTemplate page:SairPage}"/>
+        <Tab Title="Menu"
+             Icon="menu_24">
+            <ShellContent ContentTemplate="{DataTemplate page:MenuPage}"/>
         </Tab>
 
     </TabBar>
+
+    <ShellItem Route="SobrePage">
+        <ShellContent ContentTemplate="{DataTemplate page:SobrePage}"/>
+    </ShellItem>
+
+    <ShellItem Route="SairPage">
+        <ShellContent ContentTemplate="{DataTemplate page:SairPage}"/>
+    </ShellItem>
+
 
 </Shell>

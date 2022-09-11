@@ -4,9 +4,9 @@
              x:Class="App_da_Foto.Views.SobrePage"
              xmlns:vm="clr-namespace:App_da_Foto.ViewModels" 
              x:DataType="vm:SobreViewModel"
-             Title="{Binding Title}"
-             Visual="Material"
-             Shell.NavBarIsVisible="False">
+             Title="Sobre"
+             Shell.NavBarIsVisible="True"
+             Shell.NavBarHasShadow="False">
 
     <Grid>
         <Grid.RowDefinitions>

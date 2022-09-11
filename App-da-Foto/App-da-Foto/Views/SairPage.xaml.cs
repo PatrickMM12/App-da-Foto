@@ -26,7 +26,7 @@ namespace App_da_Foto.Views
 
         private void Voltar(object sender, EventArgs e)
         {
-            Shell.Current.GoToAsync("//HomePage/MapaPage");
+            Shell.Current.GoToAsync("..");
         }
     }
 }
