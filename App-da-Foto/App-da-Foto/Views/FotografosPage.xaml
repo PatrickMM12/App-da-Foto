@@ -1,105 +1,167 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="App_da_Foto.Views.FotografosPage"
-             Title="Buscar Fotógrafo"
+             xmlns:model="clr-namespace:app_da_foto.Domain.Model;assembly=app-da-foto.domain"
+             xmlns:control="clr-namespace:App_da_Foto.Utilities.CustomView"
              xmlns:local="clr-namespace:App_da_Foto.ViewModels"  
-             xmlns:model="clr-namespace:app_da_foto.Domain.Model;assembly=app-da-foto.domain" 
-             xmlns:Control="clr-namespace:Xamstrap;assembly=Xamstrap"
-             xmlns:Attached="clr-namespace:Xamstrap.AttachedProperties;assembly=Xamstrap"
              x:DataType="local:FotografosViewModel"
+             x:Class="App_da_Foto.Views.FotografosPage"
              x:Name="ListarFotografosPage"
+             Title="Buscar Fotógrafos"
              Shell.NavBarIsVisible="False">
 
     <ContentPage.Content>
+        <Grid>
 
-        <RefreshView x:DataType="local:FotografosViewModel" 
-                     Command="{Binding LoadFotografosCommand}" 
-                     IsRefreshing="{Binding IsBusy}"
-                     RefreshColor="{StaticResource Amarelo}">
-
+            
             <CollectionView x:Name="FotografosView"
                             ItemsSource="{Binding Fotografos}"
                             SelectionMode="Single"
-                            VerticalScrollBarVisibility="Default">
-                
+                            VerticalScrollBarVisibility="Always">
+
                 <CollectionView.Header>
-                    <StackLayout>
-                        <Label Text="Fotógrafos" 
-                                   FontSize="40"
-                                   FontAttributes="Bold"/>
+                    <Grid RowDefinitions="*,80,80,2,2"
+                              Padding="10">
+                        <Label Text="Buscar Fotógrafos"
+                               x:Name="lblBuscarFotografos"
+                               FontSize="40"
+                               FontAttributes="Bold"
+                               Grid.ColumnSpan="3"/>
 
-                        <BoxView BackgroundColor="{StaticResource Preto}"
-                                     HeightRequest="1"
-                                     Margin="15"/>
+                        <Frame StyleClass="EntryFrame"
+                                   Grid.Row="1" Grid.ColumnSpan="3">
+                            <Grid ColumnDefinitions="50,*">
 
-                    </StackLayout>
+                                <ImageButton Source="procurar_24"
+                                                 Clicked="BtnBuscaNome_Clicked"
+                                                 BackgroundColor="Transparent"
+                                                 Margin="10"/>
+
+                                <Entry Text="{Binding Nome, Mode=OneWayToSource}"
+                                       x:Name="EntryBuscaNome"
+                                       FontSize="17"
+                                       Placeholder="Nome"
+                                       Grid.Column="1"
+                                       MaxLength="45"
+                                       ClearButtonVisibility="WhileEditing"/>
+
+                            </Grid>
+                        </Frame>
+
+                        <Frame StyleClass="EntryFrame"
+                                   Grid.Row="2" Grid.ColumnSpan="2">
+                            <Grid ColumnDefinitions="50,180,3">
+
+                                <ImageButton Source="coroa_24"
+                                             Clicked="BtnBuscaEspecialidade_Clicked"
+                                             BackgroundColor="Transparent"
+                                             Margin="10"/>
+
+                                <control:BindablePicker Title="Especialidade"
+                                                        x:Name="PicEspecialidade"
+                                                        FontSize="17"
+                                                        ItemsSource="{Binding ListaEspecialidade}"
+                                                        SelectedItem="{Binding Especialidade, Mode=TwoWay}"
+                                                        Grid.Column="1"/>
+                                <ImageButton x:Name="btnDeletarEspecialidade"
+                                                 Source="cruz_18"
+                                                 Clicked="BtnDeletarEspecialidade_Clicked"
+                                                 BackgroundColor="Transparent"
+                                                 Grid.Column="3"
+                                                 HorizontalOptions="End"
+                                                 Margin="10">
+                                    <ImageButton.Triggers>
+                                        <DataTrigger TargetType="ImageButton"
+                                                     Binding="{Binding Source={x:Reference PicEspecialidade},Path=SelectedIndex}"
+                                                     Value="-1">
+                                            <Setter Property="IsEnabled" Value="False" />
+                                            <Setter Property="IsVisible" Value="False" />
+                                        </DataTrigger>
+                                    </ImageButton.Triggers>
+                                </ImageButton>
+
+                            </Grid>
+                        </Frame>
+
+                        <Button Text="Buscar"
+                                    Command="{Binding LoadFotografosCommand}"
+                                    FontSize="17"
+                                    StyleClass="BotaoAmarelo"
+                                    Grid.Row="2" Grid.Column="2"/>
+
+                        <BoxView BackgroundColor="{StaticResource Cinza}"
+                                     Grid.Row="4" Grid.ColumnSpan="3"
+                                     HeightRequest="1"/>
+
+                    </Grid>
                 </CollectionView.Header>
 
                 <CollectionView.ItemTemplate>
-
                     <DataTemplate>
-                        <Grid x:DataType="model:Fotografo" RowDefinitions="150" Padding="10,5">
+                        <Grid x:DataType="model:Fotografo"
+                                  RowDefinitions="140"
+                                  Padding="10,5">
 
-                            <Frame BackgroundColor="{StaticResource Cinza}"
-                                       CornerRadius="10"
-                                       HasShadow="False">
-                                <Grid ColumnDefinitions="110,*" 
-                                          Padding="0" 
-                                          RowSpacing="0">
+                            <Frame StyleClass="EntryFrame"
+                                           CornerRadius="10"
+                                           HasShadow="False">
+                                <Grid ColumnDefinitions="120,*" 
+                                              Padding="10" 
+                                              RowSpacing="0">
 
                                     <Frame BackgroundColor="{StaticResource Branco}"
                                                CornerRadius="100"
-                                               Grid.Column="0"
-                                               Grid.RowSpan="3"
-                                               HasShadow="False">
-                                        <Image Source="perfil" />
+                                               HasShadow="False"
+                                               WidthRequest="20"
+                                               MinimumWidthRequest="20"
+                                               HeightRequest="20"
+                                               MinimumHeightRequest="20">
+
+                                        <Image Source="perfil"/>
                                     </Frame>
+
 
                                     <StackLayout Grid.Column="1">
                                         <Label Text="{Binding Nome}"
-                                                   HorizontalOptions="Start"
-                                                   VerticalOptions="Start"
-                                                   LineBreakMode="NoWrap"
-                                                   Style="{DynamicResource ListItemTextStyle}" 
-                                                   FontSize="25"
-                                                   FontAttributes="Bold"/>
+                                                HorizontalOptions="Start"
+                                                VerticalOptions="Start"
+                                                LineBreakMode="TailTruncation"
+                                                FontSize="25"
+                                                FontAttributes="Bold"/>
 
                                         <Label Text="Especialidade:" 
-                                                   HorizontalOptions="Start"
-                                                   VerticalOptions="End"
-                                                   Margin="0,15,0,0"
-                                                   Style="{DynamicResource ListItemDetailTextStyle}"
-                                                   FontSize="13"/>
+                                                       HorizontalOptions="Start"
+                                                       VerticalOptions="End"
+                                                       Margin="0,15,0,0"
+                                                       FontSize="13"/>
 
                                         <Frame Padding="0" 
-                                                   BackgroundColor="{StaticResource Amarelo}"
-                                                   Margin="5,0"
-                                                   CornerRadius="20"
-                                                   HasShadow="False"
-                                                   HorizontalOptions="StartAndExpand"
-                                                   >
+                                               BackgroundColor="{StaticResource Amarelo}"
+                                               Margin="5,0"
+                                               CornerRadius="20"
+                                               HasShadow="False"
+                                               HorizontalOptions="StartAndExpand">
+
                                             <Label Text="{Binding Especialidade}" 
-                                                       HorizontalOptions="Center"
-                                                       Style="{DynamicResource ListItemDetailTextStyle}"
-                                                       FontSize="17"
-                                                   FontAttributes="Bold"
-                                                       Margin="3"/>
+                                                           HorizontalOptions="Center"
+                                                           FontSize="17"
+                                                       FontAttributes="Bold"
+                                                           Margin="3"/>
 
                                         </Frame>
 
                                         <!--
-                                            <ScrollView Orientation="Horizontal" 
-                                                        HorizontalScrollBarVisibility="Never">
-                                                <FlexLayout BindableLayout.ItemsSource="{Binding Lista de Especialidades }" Wrap="NoWrap">
-                                                    <BindableLayout.ItemTemplate>
-                                                        <DataTemplate>
+                                                <ScrollView Orientation="Horizontal" 
+                                                            HorizontalScrollBarVisibility="Never">
+                                                    <FlexLayout BindableLayout.ItemsSource="{Binding Lista de Especialidades }" Wrap="NoWrap">
+                                                        <BindableLayout.ItemTemplate>
+                                                            <DataTemplate>
 
-                                                        </DataTemplate>
-                                                    </BindableLayout.ItemTemplate>
-                                                </FlexLayout>
-                                            </ScrollView>
-                                            -->
+                                                            </DataTemplate>
+                                                        </BindableLayout.ItemTemplate>
+                                                    </FlexLayout>
+                                                </ScrollView>
+                                                -->
 
                                     </StackLayout>
 
@@ -107,8 +169,8 @@
 
                                 <Frame.GestureRecognizers>
                                     <TapGestureRecognizer NumberOfTapsRequired="1"
-                                                              Command="{Binding Source={RelativeSource AncestorType={x:Type local:FotografosViewModel}}, Path=FotografoTapped}"		
-                                                              CommandParameter="{Binding .}"/>
+                                                          Command="{Binding Source={RelativeSource AncestorType={x:Type local:FotografosViewModel}}, Path=FotografoTapped}"		
+                                                          CommandParameter="{Binding .}"/>
                                 </Frame.GestureRecognizers>
                             </Frame>
 
@@ -116,6 +178,44 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-        </RefreshView>
+
+            <Frame BackgroundColor="{StaticResource Amarelo}"
+                   VerticalOptions="End"
+                   HorizontalOptions="End"
+                   Margin="20"
+                   CornerRadius="100">
+                <ImageButton Source="topo_24"
+                             BackgroundColor="Transparent"
+                             Clicked="VoltarParaTopo_Tapped"/>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1"
+                                          Tapped="VoltarParaTopo_Tapped"/>
+                </Frame.GestureRecognizers>
+                <Frame.Triggers>
+                    <DataTrigger TargetType="Frame"
+                                Binding="{Binding Source={x:Reference FotografosView},Path=.}"
+                                Value="-1">
+                        <Setter Property="IsEnabled" Value="False" />
+                        <Setter Property="IsVisible" Value="False" />
+                    </DataTrigger>
+                </Frame.Triggers>
+            </Frame>
+
+            <Label Text="Nenhum resultado" 
+                       Style="{StaticResource TextPrimary}" 
+                       x:Name="NoResult"
+                       IsVisible="{Binding NoResult}" 
+                       VerticalOptions="CenterAndExpand" 
+                       HorizontalOptions="CenterAndExpand" 
+                       HorizontalTextAlignment="Center" 
+                       VerticalTextAlignment="Center"/>
+
+            <ActivityIndicator x:Name="Loading"
+                               IsRunning="{Binding IsBusy}" 
+                               HorizontalOptions="Center" 
+                               VerticalOptions="Center"
+                               HeightRequest="60"
+                               WidthRequest="60"/>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

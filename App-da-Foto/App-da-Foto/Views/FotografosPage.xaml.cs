@@ -1,5 +1,6 @@
 ﻿using app_da_foto.Domain.Model;
 using App_da_Foto.Models;
+using App_da_Foto.Services;
 using App_da_Foto.ViewModels;
 using Repositories;
 using System.Collections.Generic;
@@ -12,29 +13,36 @@ namespace App_da_Foto.Views
     {
         FotografosViewModel _viewModel;
 
-        FotografoRepositorio fotografoRepositorio;
-        IEnumerable<Fotografo> fotografos;
-
         public FotografosPage()
         {
             InitializeComponent();
-
-            fotografoRepositorio = new FotografoRepositorio();
-            AtualizaDados();
-
             BindingContext = _viewModel = new FotografosViewModel();
-        }
-
-        async void AtualizaDados()
-        {
-            fotografos = await fotografoRepositorio.GetFotografosAsync();
-            FotografosView.ItemsSource = fotografos.OrderBy(item => item.Nome).ToList();
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
             _viewModel.OnAparecendo();
+        }
+
+        private void BtnBuscaNome_Clicked(object sender, System.EventArgs e)
+        {
+            EntryBuscaNome.Focus();
+        }
+
+        private void BtnBuscaEspecialidade_Clicked(object sender, System.EventArgs e)
+        {
+            PicEspecialidade.Focus();
+        }
+
+        private void BtnDeletarEspecialidade_Clicked(object sender, System.EventArgs e)
+        {
+            PicEspecialidade.SelectedIndex = -1;
+        }
+
+        private void VoltarParaTopo_Tapped(object sender, System.EventArgs e)
+        {
+            FotografosView.ScrollTo(1);
         }
     }
 }
