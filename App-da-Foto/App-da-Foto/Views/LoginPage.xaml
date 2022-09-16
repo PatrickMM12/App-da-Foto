@@ -24,6 +24,7 @@
                    Placeholder="E-mail" 
                    Keyboard="Email"
                    ReturnType="Next"
+                   MaxLength="45"
                    ClearButtonVisibility="WhileEditing"/>
         </Frame>
 
@@ -33,6 +34,7 @@
                     Placeholder="Senha" 
                     IsPassword="True"
                     ReturnType="Done"
+                   MaxLength="50"
                     ClearButtonVisibility="WhileEditing"/>
         </Frame>
 

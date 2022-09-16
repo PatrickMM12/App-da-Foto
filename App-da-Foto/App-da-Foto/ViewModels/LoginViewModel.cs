@@ -34,7 +34,6 @@ namespace App_da_Foto.ViewModels
             LoginCommand = new Command(OnLoginClicked);
             LoginFotografoCommand = new Command(OnLoginFotografoClicked);
             AddFotografoCommand = new Command(OnAdicionarFotografo);
-
         }
 
         public Command LoginCommand { get; }
@@ -43,10 +42,7 @@ namespace App_da_Foto.ViewModels
 
         private async void OnLoginFotografoClicked(object obj)
         {
-            string email = Email;
-            string senha = Senha;
-
-            if (email == null || senha == null)
+            if (Email == string.Empty || Senha == string.Empty || Email == null || Senha == null)
             {
                 await Shell.Current.DisplayAlert("Erro!", "Campo de E-mail e/ou senha vazio(s)!", "OK");
                 return;
