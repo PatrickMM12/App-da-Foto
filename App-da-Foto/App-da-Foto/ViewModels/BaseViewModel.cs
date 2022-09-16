@@ -12,14 +12,25 @@ namespace App_da_Foto.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IFotografoRepositorio<Fotografo> DataStore => DependencyService.Get<IFotografoRepositorio<Fotografo>>();
-        protected FotografoService fotografoService;
+        FotografoService fotografoService;
+        public FotografoService FotografoService 
+        { 
+            get => fotografoService; 
+            set => fotografoService = value; 
+        }
 
         bool isBusy = false;
         public bool IsBusy
         {
             get { return isBusy; }
             set { SetProperty(ref isBusy, value); }
+        }
+
+        bool noResult = false;
+        public bool NoResult
+        {
+            get { return noResult; }
+            set { SetProperty(ref noResult, value); }
         }
 
         string title = string.Empty;
@@ -29,11 +40,6 @@ namespace App_da_Foto.ViewModels
             set { SetProperty(ref title, value); }
         }
 
-        internal FotografoService FotografoService 
-        { 
-            get => fotografoService; 
-            set => fotografoService = value; 
-        }
 
         protected bool SetProperty<T>(ref T backingStore, T value,
             [CallerMemberName] string propertyName = "",
