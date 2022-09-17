@@ -17,7 +17,8 @@
             <CollectionView x:Name="FotografosView"
                             ItemsSource="{Binding Fotografos}"
                             SelectionMode="Single"
-                            VerticalScrollBarVisibility="Always">
+                            VerticalScrollBarVisibility="Always"
+                            Scrolled="FotografosView_Scrolled">
 
                 <CollectionView.Header>
                     <Grid RowDefinitions="*,80,80,2,2"
@@ -179,11 +180,13 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-            <Frame BackgroundColor="{StaticResource Amarelo}"
+            <Frame x:Name="btnVoltarParaTopo" BackgroundColor="{StaticResource Amarelo}"
                    VerticalOptions="End"
                    HorizontalOptions="End"
                    Margin="20"
-                   CornerRadius="100">
+                   CornerRadius="100"
+                   IsVisible="False"
+                   IsEnabled="False">
                 <ImageButton Source="topo_24"
                              BackgroundColor="Transparent"
                              Clicked="VoltarParaTopo_Tapped"/>
@@ -191,14 +194,6 @@
                     <TapGestureRecognizer NumberOfTapsRequired="1"
                                           Tapped="VoltarParaTopo_Tapped"/>
                 </Frame.GestureRecognizers>
-                <Frame.Triggers>
-                    <DataTrigger TargetType="Frame"
-                                Binding="{Binding Source={x:Reference FotografosView},Path=.}"
-                                Value="-1">
-                        <Setter Property="IsEnabled" Value="False" />
-                        <Setter Property="IsVisible" Value="False" />
-                    </DataTrigger>
-                </Frame.Triggers>
             </Frame>
 
             <Label Text="Nenhum resultado" 

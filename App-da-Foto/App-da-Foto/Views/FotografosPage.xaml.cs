@@ -44,5 +44,20 @@ namespace App_da_Foto.Views
         {
             FotografosView.ScrollTo(1);
         }
+
+        private void FotografosView_Scrolled(object sender, ItemsViewScrolledEventArgs e)
+        {
+            if (e.VerticalOffset >= 500.0)
+            {
+                btnVoltarParaTopo.IsVisible = true;
+                btnVoltarParaTopo.IsEnabled = true;
+            }
+            if (e.VerticalOffset <500.0)
+            {
+                btnVoltarParaTopo.IsVisible = false;
+                btnVoltarParaTopo.IsEnabled = false;
+            }
+
+        }
     }
 }
