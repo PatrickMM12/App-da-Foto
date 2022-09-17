@@ -17,10 +17,11 @@
         <Frame StyleClass="EntryFrame" 
                    Grid.Row="3" Grid.ColumnSpan="2">
             <Entry Text="{Binding Nome}"
-                       Placeholder="Nome" 
-                       ReturnType="Next"
-                       Keyboard="Text"
-                       ClearButtonVisibility="WhileEditing"/>
+                   Placeholder="Nome" 
+                   ReturnType="Next"
+                   Keyboard="Text"
+                   MaxLength="45"
+                   ClearButtonVisibility="WhileEditing"/>
         </Frame>
 
         <Frame  StyleClass="EntryFrame"
@@ -34,37 +35,39 @@
         <Frame StyleClass="EntryFrame" 
                    Grid.Row="5" Grid.ColumnSpan="2">
             <Entry Text="{Binding Email}"
-                       Placeholder="E-mail"
-                       ReturnType="Next"
-                       Keyboard="Email"
-                       ClearButtonVisibility="WhileEditing"/>
+                   Placeholder="E-mail"
+                   ReturnType="Next"
+                   Keyboard="Email"
+                   MaxLength="45"
+                   ClearButtonVisibility="WhileEditing"/>
         </Frame>
 
         <Frame StyleClass="EntryFrame"
                    Grid.Row="6" Grid.ColumnSpan="2">
             <Entry Text="{Binding Senha}"
-                       Placeholder="Senha"
-                       IsPassword="True"
-                       ReturnType="Done"
-                       ClearButtonVisibility="WhileEditing"/>
+                   Placeholder="Senha"
+                   IsPassword="True"
+                   ReturnType="Done"
+                   MaxLength="50"
+                   ClearButtonVisibility="WhileEditing"/>
         </Frame>
         
         <Label x:Name="TxtMessages" 
-                   Text="{Binding Message, Mode=OneWay}"
-                   TextColor="OrangeRed"
-                   Grid.Row="7" Grid.ColumnSpan="2"/>
+               Text="{Binding Message, Mode=OneWay}"
+               TextColor="OrangeRed"
+               Grid.Row="7" Grid.ColumnSpan="2"/>
 
         <Button Text="Voltar" 
-                    Command="{Binding CancelCommand}" 
-                    HorizontalOptions="FillAndExpand"
-                    Grid.Row="9"/>
+                Command="{Binding CancelCommand}" 
+                HorizontalOptions="FillAndExpand"
+                Grid.Row="9"/>
 
         <Button Text="Cadastrar" 
-                    TextColor="{StaticResource Preto}"
-                    BackgroundColor="{StaticResource Amarelo}"
-                    Command="{Binding SaveCommand}" 
-                    HorizontalOptions="FillAndExpand" 
-                    Grid.Row="9" Grid.Column="1"/>
+                TextColor="{StaticResource Preto}"
+                BackgroundColor="{StaticResource Amarelo}"
+                Command="{Binding SaveCommand}" 
+                HorizontalOptions="FillAndExpand" 
+                Grid.Row="9" Grid.Column="1"/>
 
     </Grid>
 

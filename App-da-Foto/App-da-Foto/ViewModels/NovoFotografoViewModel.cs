@@ -20,8 +20,8 @@ namespace App_da_Foto.ViewModels
     public class NovoFotografoViewModel : BaseViewModel
     {
         private string nome;
-        private string especialidade;
         private string email;
+        private string especialidade;
         private string senha;
         private string message;
 
@@ -32,25 +32,21 @@ namespace App_da_Foto.ViewModels
             get => nome;
             set => SetProperty(ref nome, value);
         }
-
-        public string Especialidade
-        {
-            get => especialidade;
-            set => SetProperty(ref especialidade, value);
-        }
-
         public string Email
         {
             get => email;
             set => SetProperty(ref email, value);
         }
-
+        public string Especialidade
+        {
+            get => especialidade;
+            set => SetProperty(ref especialidade, value);
+        }
         public string Senha
         {
             get => senha;
             set => SetProperty(ref senha, value);
         }
-
         public string Message 
         { 
             get => message; 
@@ -128,17 +124,18 @@ namespace App_da_Foto.ViewModels
 
             await Shell.Current.Navigation.PushPopupAsync(new Loading());
 
-            ResponseService<Fotografo> responseService = await FotografoService.AdicionarFotografo(newFotografo);
+            try
+            {
+                ResponseService<Fotografo> responseService = await FotografoService.AdicionarFotografo(newFotografo);
 
-            if (responseService.IsSuccess)
-            {
-                await Shell.Current.DisplayAlert("Sucesso!", "Cadastrado realizado com Sucesso! Por favor realizar Login", "Ok");
-                await Shell.Current.GoToAsync("..");
-            }
-            else
-            {
-                if (responseService.StatusCode == 400)
+                if (responseService.IsSuccess)
                 {
+                    await Shell.Current.DisplayAlert("Sucesso!", "Cadastrado realizado com Sucesso! Por favor realizar Login", "Ok");
+                    await Shell.Current.GoToAsync("..");
+                }
+                else
+                {
+                    await Shell.Current.DisplayAlert("Erro!", responseService.Errors.ToString(), "Ok");
                     StringBuilder stringBuider = new StringBuilder();
                     foreach (var dicKey in responseService.Errors)
                     {
@@ -149,6 +146,10 @@ namespace App_da_Foto.ViewModels
                     }
                     Message = stringBuider.ToString();
                 }
+            }
+            catch
+            {
+                Message = "E-mail já cadastrado!";
             }
             await Shell.Current.Navigation.PopAllPopupAsync();
         }
