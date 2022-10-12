@@ -18,7 +18,7 @@ namespace app_da_foto.Domain.Model
         [MaxLength(1)]
         public string Sexo { get; set; }
 
-        public DateTime Nascimento { get; set; }
+        public string Nascimento { get; set; }
 
         [Required]
         [EmailAddress]

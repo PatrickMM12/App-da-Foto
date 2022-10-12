@@ -29,6 +29,10 @@ namespace app_da_foto.Domain.Model
         [Required]
         public string Cep { get; set; }
 
+        public string Latitude { get; set; }
+
+        public string Longitude { get; set; } 
+
         [Required]
         public int IdFotografo { get; set; }
 
