@@ -13,7 +13,7 @@
     <ContentPage.Content>
         <Grid>
 
-            
+
             <CollectionView x:Name="FotografosView"
                             ItemsSource="{Binding Fotografos}"
                             SelectionMode="Single"
@@ -104,19 +104,19 @@
                                   Padding="10,5">
 
                             <Frame StyleClass="EntryFrame"
-                                           CornerRadius="10"
-                                           HasShadow="False">
+                                    CornerRadius="10"
+                                    HasShadow="False">
                                 <Grid ColumnDefinitions="120,*" 
-                                              Padding="10" 
-                                              RowSpacing="0">
+                                        Padding="10" 
+                                        RowSpacing="0">
 
                                     <Frame BackgroundColor="{StaticResource Branco}"
-                                               CornerRadius="100"
-                                               HasShadow="False"
-                                               WidthRequest="20"
-                                               MinimumWidthRequest="20"
-                                               HeightRequest="20"
-                                               MinimumHeightRequest="20">
+                                            CornerRadius="100"
+                                            HasShadow="False"
+                                            WidthRequest="100"
+                                            HeightRequest="100"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center">
 
                                         <Image Source="perfil"/>
                                     </Frame>
@@ -126,43 +126,32 @@
                                         <Label Text="{Binding Nome}"
                                                 HorizontalOptions="Start"
                                                 VerticalOptions="Start"
-                                                LineBreakMode="TailTruncation"
-                                                FontSize="25"
-                                                FontAttributes="Bold"/>
+                                                LineBreakMode="WordWrap"
+                                                HorizontalTextAlignment="Start"
+                                                FontSize="20"
+                                                FontFamily="MontserratBold"/>
 
                                         <Label Text="Especialidade:" 
-                                                       HorizontalOptions="Start"
-                                                       VerticalOptions="End"
-                                                       Margin="0,15,0,0"
-                                                       FontSize="13"/>
+                                                HorizontalOptions="Start"
+                                                VerticalOptions="EndAndExpand"
+                                                Margin="0,10,0,0"
+                                                FontSize="13"/>
 
                                         <Frame Padding="0" 
                                                BackgroundColor="{StaticResource Amarelo}"
-                                               Margin="5,0"
+                                               Margin="5,0,0,5"
                                                CornerRadius="20"
                                                HasShadow="False"
-                                               HorizontalOptions="StartAndExpand">
+                                               HorizontalOptions="StartAndExpand"
+                                               VerticalOptions="EndAndExpand">
 
                                             <Label Text="{Binding Especialidade}" 
-                                                           HorizontalOptions="Center"
-                                                           FontSize="17"
-                                                       FontAttributes="Bold"
-                                                           Margin="3"/>
+                                                    HorizontalOptions="Center"
+                                                    FontSize="17"
+                                                    FontFamily="MontserratBold"
+                                                    Margin="3"/>
 
                                         </Frame>
-
-                                        <!--
-                                                <ScrollView Orientation="Horizontal" 
-                                                            HorizontalScrollBarVisibility="Never">
-                                                    <FlexLayout BindableLayout.ItemsSource="{Binding Lista de Especialidades }" Wrap="NoWrap">
-                                                        <BindableLayout.ItemTemplate>
-                                                            <DataTemplate>
-
-                                                            </DataTemplate>
-                                                        </BindableLayout.ItemTemplate>
-                                                    </FlexLayout>
-                                                </ScrollView>
-                                                -->
 
                                     </StackLayout>
 
@@ -180,7 +169,8 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-            <Frame x:Name="btnVoltarParaTopo" BackgroundColor="{StaticResource Amarelo}"
+            <Frame x:Name="btnVoltarParaTopo" 
+                   BackgroundColor="{StaticResource Amarelo}"
                    VerticalOptions="End"
                    HorizontalOptions="End"
                    Margin="20"
@@ -196,14 +186,14 @@
                 </Frame.GestureRecognizers>
             </Frame>
 
-            <Label Text="Nenhum resultado" 
-                       Style="{StaticResource TextPrimary}" 
-                       x:Name="NoResult"
-                       IsVisible="{Binding NoResult}" 
-                       VerticalOptions="CenterAndExpand" 
-                       HorizontalOptions="CenterAndExpand" 
-                       HorizontalTextAlignment="Center" 
-                       VerticalTextAlignment="Center"/>
+            <Label x:Name="NoResult"
+                   Text="Nenhum resultado"
+                   Style="{StaticResource TextPrimary}" 
+                   IsVisible="{Binding NoResult}" 
+                   VerticalOptions="CenterAndExpand" 
+                   HorizontalOptions="CenterAndExpand" 
+                   HorizontalTextAlignment="Center" 
+                   VerticalTextAlignment="Center"/>
 
             <ActivityIndicator x:Name="Loading"
                                IsRunning="{Binding IsBusy}" 

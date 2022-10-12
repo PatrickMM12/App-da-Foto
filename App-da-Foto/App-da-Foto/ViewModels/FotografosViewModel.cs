@@ -3,6 +3,8 @@ using App_da_Foto.Models;
 using App_da_Foto.Services;
 using App_da_Foto.Utilities.Load;
 using App_da_Foto.Views;
+using Microsoft.AppCenter.Analytics;
+using Rg.Plugins.Popup.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,31 +18,17 @@ namespace App_da_Foto.ViewModels
     public class FotografosViewModel : BaseViewModel
     {
         private string nome;
-        private string especialidade;
-
         public string Nome
         {
             get => nome;
             set => SetProperty(ref nome, value);
         }
+
+        private string especialidade;
         public string Especialidade
         {
             get => especialidade;
             set => SetProperty(ref especialidade, value);
-        }
-
-        ObservableCollection<string> _listaEspecialidade;
-        public ObservableCollection<string> ListaEspecialidade
-        {
-            get
-            {
-                return _listaEspecialidade;
-            }
-            set
-            {
-                _listaEspecialidade = value;
-                OnPropertyChanged();
-            }
         }
 
         private Fotografo _fotografoSelecionado;
@@ -52,13 +40,6 @@ namespace App_da_Foto.ViewModels
                 SetProperty(ref _fotografoSelecionado, value);
                 OnFotografoSelecionado(value);
             }
-        }
-
-        FotografoService fotografoService;
-        public FotografoService FotografoService 
-        { 
-            get => fotografoService;
-            set => SetProperty(ref fotografoService, value);
         }
 
         private ObservableCollection<Fotografo> fotografos;
@@ -78,37 +59,6 @@ namespace App_da_Foto.ViewModels
             LoadFotografosCommand = new Command(async () => await ExecuteLoadFotografosCommand());
 
             FotografoTapped = new Command<Fotografo>(OnFotografoSelecionado);
-
-            ListaEspecialidade = new ObservableCollection<string>
-            {
-                "Geral",
-                "Retrato",
-                "Casamentos",
-                "Gestante",
-                "New Born",
-                "Infantil",
-                "Corporativo",
-                "Produto",
-                "Preto e Branco",
-                "Publicitária",
-                "Moda",
-                "Macrofotografia",
-                "Microfotografia",
-                "Aérea",
-                "Artística",
-                "Fotojornalismo",
-                "Documental",
-                "Selvagem",
-                "Esportiva",
-                "Viagens",
-                "Subaquática",
-                "Erótica",
-                "Astronômica",
-                "Arquitetônica",
-                "Culinária",
-                "Paisagem",
-                "Científica"
-            };
         }
 
         public void OnAparecendo()
@@ -119,6 +69,8 @@ namespace App_da_Foto.ViewModels
 
         async Task ExecuteLoadFotografosCommand()
         {
+            Analytics.TrackEvent("Buscar Fotografos");
+
             IsBusy = true;
             NoResult = false;
             try
@@ -133,7 +85,7 @@ namespace App_da_Foto.ViewModels
                 }
                 else
                 {
-                    await Shell.Current.DisplayAlert("Erro!", responseService.StatusCode.ToString(), "OK");
+                    await Shell.Current.DisplayAlert("Erro!", responseService.StatusCode.ToString() + responseService.Errors.ToString(), "OK");
                 }
 
                 if (Fotografos.Count == 0)
@@ -159,9 +111,20 @@ namespace App_da_Foto.ViewModels
         {
             if (fotografo == null)
                 return;
+            await Shell.Current.Navigation.PushPopupAsync(new Loading());
 
-            // This will push the FotografoPerfilPage onto the navigation stack
+            //var _fotografo = new Fotografo
+            //{
+            //    Nome = fotografo.Nome,
+            //    Especialidade = fotografo.Especialidade,
+            //};
+            //var fotografoPerfil = new FotografoPerfilPage();
+            //fotografoPerfil.BindingContext = fotografo;
+
+            //await Shell.Current.Navigation.PushAsync(fotografoPerfil);
+
             await Shell.Current.GoToAsync($"{nameof(FotografoPerfilPage)}?{nameof(FotografoPerfilViewModel.FotografoId)}={fotografo.Id}");
+            
         }
     }
 }
