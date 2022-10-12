@@ -9,10 +9,11 @@ namespace App_da_Foto.Views
         {
             InitializeComponent();
 
-            Routing.RegisterRoute(nameof(FotografoPerfilPage), typeof(FotografoPerfilPage));
-            Routing.RegisterRoute(nameof(NovoFotografoPage), typeof(NovoFotografoPage));
-            Routing.RegisterRoute(nameof(BuscarLugarPage), typeof(BuscarLugarPage));
             Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
+            Routing.RegisterRoute(nameof(NovoFotografoPage), typeof(NovoFotografoPage));
+            Routing.RegisterRoute(nameof(FotografoPerfilPage), typeof(FotografoPerfilPage));
+            Routing.RegisterRoute("EditarPerfil", typeof(EditarPerfilPage));
+            Routing.RegisterRoute(nameof(BuscarLugarPage), typeof(BuscarLugarPage));
             Routing.RegisterRoute(nameof(SobrePage), typeof(SobrePage));
             Routing.RegisterRoute(nameof(SairPage), typeof(SairPage));
 

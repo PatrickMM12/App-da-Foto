@@ -38,7 +38,7 @@
                 <Setter Property="Shell.NavBarIsVisible" Value="False"/>
             </Style>
 
-            <Style TargetType="TabBar" BasedOn="{StaticResource BaseStyle}" />
+            <Style TargetType="TabBar" BasedOn="{StaticResource BaseStyle}"/>
             <Style TargetType="FlyoutItem" BasedOn="{StaticResource BaseStyle}" />
 
             <Style Class="FlyoutItemLabelStyle" TargetType="Label">
@@ -84,14 +84,8 @@
     <ShellItem Route="LoginPage">
         <ShellContent ContentTemplate="{DataTemplate page:LoginPage}"/>
     </ShellItem>
-    
-    <TabBar Route="HomePage">
 
-        <!--Tab Title="Sobre" 
-             Icon="info_24"
-             Shell.PresentationMode="Modal">
-            <ShellContent ContentTemplate="{DataTemplate page:SobrePage}"/>
-        </Tab-->
+    <TabBar Route="HomePage">
 
         <Tab Title="Fotógrafos" 
              Icon="busca_pessoa_24">
@@ -112,6 +106,10 @@
 
     </TabBar>
 
+    <ShellItem Route="EditarPerfilPage">
+        <ShellContent ContentTemplate="{DataTemplate page:EditarPerfilPage}"/>
+    </ShellItem>
+    
     <ShellItem Route="SobrePage">
         <ShellContent ContentTemplate="{DataTemplate page:SobrePage}"/>
     </ShellItem>
