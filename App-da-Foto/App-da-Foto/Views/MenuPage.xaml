@@ -1,24 +1,111 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-             xmlns:vm="clr-namespace:App_da_Foto.ViewModels"
-             x:DataType="vm:MenuViewModel"
+             xmlns:viewModel="clr-namespace:App_da_Foto.ViewModels"
+             x:DataType="viewModel:MenuViewModel"
              x:Class="App_da_Foto.Views.MenuPage"
              Shell.NavBarIsVisible="False"
              Shell.PresentationMode="Modal">
 
-    <Grid RowDefinitions="100, 100, 100, 100"
-          Padding="10"
-          RowSpacing="10">
-        <Button StyleClass="BotaoMenu" 
-                Text="Sobre" 
-                ImageSource="info_24.png"
-                Command="{Binding SobreCommand}"/>
-        
-        <Button StyleClass="BotaoMenu" 
-                Text="Sair" 
-                ImageSource="saida_24.png"
-                Command="{Binding SairCommand}"
-                Grid.Row="1"/>
+    <Grid RowDefinitions="250,*">
+        <Grid ColumnDefinitions="150,*" 
+              Padding="10" 
+              RowSpacing="0"
+              ColumnSpacing="0"
+              IsVisible="{Binding Logado}">
+
+            <Frame BackgroundColor="{StaticResource Branco}"
+                    CornerRadius="100"
+                    HasShadow="True"
+                    WidthRequest="80"
+                    HeightRequest="80"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center">
+
+                <Image Source="perfil"/>
+            </Frame>
+
+            <Grid Grid.Column="1"
+                  RowDefinitions="*,*,*,*"
+                  ColumnSpacing="0"
+                  RowSpacing="0">
+                <Label Text="{Binding Nome}"
+                       LineBreakMode="WordWrap"
+                       HorizontalTextAlignment="Start"
+                       FontSize="25"
+                       FontFamily="MontserratBold"
+                       Grid.ColumnSpan="2"
+                       VerticalOptions="Center"/>
+
+                <Label Text="Especialidade:" 
+                        Margin="0,15,0,0"
+                        FontSize="13"
+                       Grid.Row="1"
+                       VerticalOptions="End"/>
+
+                <Frame Padding="0" 
+                       BackgroundColor="{StaticResource Amarelo}"
+                       Margin="5,0"
+                       CornerRadius="20"
+                       HasShadow="False"
+                       Grid.Row="2"
+                       VerticalOptions="Start"
+                       HorizontalOptions="CenterAndExpand">
+
+                    <Label Text="{Binding Especialidade}" 
+                            HorizontalOptions="Center"
+                            FontSize="17"
+                            FontFamily="MontserratBold"
+                            Margin="3"/>
+
+                </Frame>
+                <Frame BackgroundColor="Transparent"
+                       BorderColor="{StaticResource Preto}"
+                       CornerRadius="20"
+                       HasShadow="False"
+                       Grid.Row="1"
+                       Grid.RowSpan="2"
+                       Grid.Column="1"
+                       HorizontalOptions="StartAndExpand"
+                       VerticalOptions="Center">
+
+                    <Label Text="Editar Perfil"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           FontSize="15"
+                           LineBreakMode="WordWrap"/>
+
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1"
+                                              Command="{Binding EditarPerfilCommand}"		
+                                              CommandParameter="{Binding .}"/>
+                    </Frame.GestureRecognizers>
+                </Frame>
+
+            </Grid>
+            <BoxView HeightRequest="1"
+                     BackgroundColor="{StaticResource Cinza}"
+                     VerticalOptions="End"
+                     Grid.ColumnSpan="2"/>
+
+        </Grid>
+        <Grid RowDefinitions="1, 100, 100, 100"
+              Padding="10"
+              RowSpacing="10"
+              Grid.Row="1">
+            <Button StyleClass="BotaoMenu" 
+                    Text="Sobre" 
+                    ImageSource="info_24.png"
+                    Command="{Binding SobreCommand}"
+                    Grid.Row="1"/>
+
+            <Button StyleClass="BotaoMenu"
+                    Text="Sair"
+                    ImageSource="saida_24.png"
+                    Command="{Binding SairCommand}"
+                    Grid.Row="2"/>
+        </Grid>
+
     </Grid>
+    
 </ContentPage>

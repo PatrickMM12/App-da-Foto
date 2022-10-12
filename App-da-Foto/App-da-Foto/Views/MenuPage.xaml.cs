@@ -13,10 +13,17 @@ namespace App_da_Foto.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MenuPage : ContentPage
     {
+        MenuViewModel _viewModel;
         public MenuPage()
         {
             InitializeComponent();
-            BindingContext = new MenuViewModel();
+            BindingContext = _viewModel = new MenuViewModel();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            _viewModel.OnAparecendo();
         }
     }
 }
