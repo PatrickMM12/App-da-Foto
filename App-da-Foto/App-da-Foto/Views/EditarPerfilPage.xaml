@@ -1,0 +1,326 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:behaviorPack="clr-namespace:Xamarin.Forms.BehaviorValidationPack;assembly=Xamarin.Forms.BehaviorValidationPack"
+             xmlns:control="clr-namespace:App_da_Foto.Utilities.CustomView"
+             xmlns:viewModel="clr-namespace:App_da_Foto.ViewModels"
+             x:DataType="viewModel:EditarPerfilViewModel"
+             ios:Page.UseSafeArea="true"
+             x:Class="App_da_Foto.Views.EditarPerfilPage"
+             Title="Editar Perfil">
+                
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid VerticalOptions="CenterAndExpand" 
+                  RowSpacing="10" 
+                  ColumnSpacing="10"
+                  RowDefinitions="*,*"
+                  ColumnDefinitions="*,*"
+                  Padding="10">
+
+                <Label Text="Dados Pessoais"
+                       VerticalOptions="End"
+                       HorizontalOptions="Center"
+                       Grid.ColumnSpan="2"/>
+                <Frame StyleClass="EntryFrame" 
+                       Grid.Row="1" Grid.ColumnSpan="2">
+                    <Entry Placeholder="Nome Completo"
+                           Text="{Binding Nome, Mode=TwoWay}"
+                           Keyboard="Text"
+                           ReturnType="Next"
+                           MaxLength="45">
+                    </Entry>
+                </Frame>
+
+                <Frame  StyleClass="EntryFrame"
+                    Grid.Row="2" Grid.ColumnSpan="2">
+                    <control:BindablePicker Title="Selecione sua Especialidade"
+                                    FontSize="15"
+                                    ItemsSource="{Binding ListaEspecialidade}"
+                                    SelectedItem="{Binding Especialidade, Mode=TwoWay}"/>
+                </Frame>
+
+                <Frame StyleClass="EntryFrame" 
+                       Grid.Row="3" Grid.ColumnSpan="2">
+                    <Grid RowSpacing="0" ColumnDefinitions="*">
+                        <Entry Placeholder="Sexo"
+                               IsReadOnly="True"
+                               IsSpellCheckEnabled="False"
+                               Grid.ColumnSpan="7"/>
+
+                        <RadioButton x:Name="checkMasculino"
+                                  Grid.Column="3"
+                                  CheckedChanged="CheckMasculino_CheckedChanged"/>
+                        <Entry x:Name="entryMasculino" 
+                               Placeholder="Masculino"
+                               IsReadOnly="True"
+                               IsSpellCheckEnabled="False"
+                               Grid.Column="4" Grid.ColumnSpan="3"/>
+
+                        <RadioButton x:Name="checkFeminino" 
+                                  Grid.Column="7" 
+                                  CheckedChanged="CheckFeminino_CheckedChanged"/>
+                        <Entry x:Name="entryFeminino" 
+                               Placeholder="Feminino" 
+                               IsReadOnly="True"
+                               IsSpellCheckEnabled="False" 
+                               Grid.Column="8" 
+                               Grid.ColumnSpan="3"/>
+                    </Grid>
+                </Frame>
+
+                <Frame StyleClass="EntryFrame"
+                       Grid.Row="4" Grid.ColumnSpan="2">
+                    <control:BindableDatePicker x:Name="dtpNascimento"
+                                                Date="{Binding Nascimento}"
+                                                DateSelected="dtpNascimento_DateSelected"/>
+                </Frame>
+    
+                <Frame StyleClass="EntryFrame" 
+                       Grid.Row="5" Grid.ColumnSpan="2">
+                    <Entry Placeholder="E-mail" 
+                           Text="{Binding Email, Mode=TwoWay}"
+                           IsEnabled="False">
+                        <Entry.Behaviors>
+                            <behaviorPack:EmailValidationBehavior />
+                        </Entry.Behaviors>
+                    </Entry>
+                </Frame>
+
+                <Frame StyleClass="EntryFrame"
+                       Grid.Row="6" Grid.ColumnSpan="2">
+                    <Entry Placeholder="Senha" 
+                           Text="{Binding Senha, Mode=TwoWay}"
+                           IsPassword="True"
+                           Keyboard="Text"
+                           ReturnType="Done"
+                           MaxLength="45">
+                        <Entry.Behaviors>
+                            <behaviorPack:PasswordValidationBehavior />
+                        </Entry.Behaviors>
+                    </Entry>
+                </Frame>
+                
+                <Button Text="Salvar Fotografo" 
+                        Command="{Binding SalvarFotografoCommand}" 
+                        StyleClass="BotaoAmarelo"
+                        HorizontalOptions="FillAndExpand"
+                        Grid.Row="7"
+                        Grid.ColumnSpan="2"/>
+
+                <BoxView HeightRequest="1"
+                         BackgroundColor="{StaticResource Cinza}"
+                         VerticalOptions="Start"
+                         Grid.Row="8"
+                         Grid.ColumnSpan="2"/>
+
+                <Label Text="Endereço"
+                       VerticalOptions="End"
+                       HorizontalOptions="Center"
+                       Grid.Row="8"
+                       Grid.ColumnSpan="2"/>
+                
+                <Frame StyleClass="EntryFrame" 
+                       Grid.Row="9" Grid.ColumnSpan="2">
+                    <Entry x:Name="entryEndereco"
+                           Placeholder="Endereço"
+                           Text="">
+                        <Entry.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                        Tapped="OnEnterAddressTapped"/>
+                        </Entry.GestureRecognizers>
+                    </Entry>
+                </Frame>
+
+                <ListView VerticalOptions="FillAndExpand"
+                            BackgroundColor="LightGray"
+                            Grid.Row="10"
+                            Footer=""
+                            SelectedItem="{Binding PlaceSelected, Mode=TwoWay}"
+                            x:Name="list"
+                            ItemsSource="{Binding Places}"
+                            HasUnevenRows="true"
+                            SeparatorColor="Gray"
+                            ios:ListView.SeparatorStyle="FullWidth">
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid Padding="15"
+                                          RowSpacing="2"
+                                          ColumnSpacing="15">
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Image Source="ic_location"
+                                                 HeightRequest="20"
+                                                 WidthRequest="20"
+                                                 VerticalOptions="Start"
+                                                 Grid.Row="0"
+                                                 Grid.Column="0"
+                                                 Grid.RowSpan="2"/>
+
+                                    <Label LineBreakMode="MiddleTruncation"
+                                                   Grid.Row="0"
+                                                   Grid.Column="1"/>
+                                    <!-- Text="{Binding StructuredFormatting.MainText}" -->
+
+                                    <Label LineBreakMode="MiddleTruncation"
+                                                     TextColor="Gray" 
+                                                     Grid.Row="1"
+                                                     Grid.Column="1"/>
+                                    <!-- Text="{Binding StructuredFormatting.SecondaryText}" -->
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+
+                </ListView>
+
+                <Frame StyleClass="EntryFrame" 
+                       Grid.Row="10" Grid.ColumnSpan="1">
+                    <Entry x:Name="entCep"
+                        Placeholder="CEP" 
+                           Text="{Binding Cep, Mode=TwoWay}"
+                           Keyboard="Text"
+                           ReturnType="Next"
+                           MaxLength="9">
+                        <Entry.Behaviors>
+                            <behaviorPack:CEPValidationBehavior/>
+                            <behaviorPack:MaskedBehavior Mask="XXXXX-XXX" />
+                        </Entry.Behaviors>
+                    </Entry>
+                </Frame>
+
+                <Button Text="Buscar CEP" 
+                        Command="{Binding BuscarCepCommand}" 
+                        HorizontalOptions="FillAndExpand"
+                        Grid.Row="10" Grid.Column="1"/>
+
+                <Frame StyleClass="EntryFrame"
+                       Grid.Row="11" Grid.ColumnSpan="2">
+                    <Entry Placeholder="Logradouro" 
+                           Text="{Binding Logradouro, Mode=TwoWay}"
+                           Keyboard="Text"
+                           ReturnType="Next"
+                           MaxLength="45"/>     
+                </Frame>
+
+                <Frame StyleClass="EntryFrame"
+                       Grid.Row="12" Grid.ColumnSpan="2">
+                    <Entry Placeholder="Numero" 
+                           Text="{Binding Numero, Mode=TwoWay}"
+                           Keyboard="Numeric"
+                           ReturnType="Next"
+                           MaxLength="5">
+                        <Entry.Behaviors>
+                            <behaviorPack:NumberValidationBehavior/>
+                        </Entry.Behaviors>
+                    </Entry>
+                </Frame>
+
+                <Frame StyleClass="EntryFrame"
+                       Grid.Row="13" Grid.ColumnSpan="2">
+                    <Entry Placeholder="Complemento" 
+                           Text="{Binding Complemento, Mode=TwoWay}"
+                           Keyboard="Text"
+                           ReturnType="Next"
+                           MaxLength="45"/>
+                </Frame>
+
+                <Frame StyleClass="EntryFrame"
+                       Grid.Row="14" Grid.ColumnSpan="2">
+                    <Entry Placeholder="Bairro" 
+                           Text="{Binding Bairro, Mode=TwoWay}"
+                           Keyboard="Text"
+                           ReturnType="Next"
+                           MaxLength="45"/>
+                </Frame>
+
+                <Frame StyleClass="EntryFrame"
+                       Grid.Row="15" Grid.ColumnSpan="2">
+                    <Entry Placeholder="Cidade" 
+                           Text="{Binding Cidade, Mode=TwoWay}"
+                           Keyboard="Text"
+                           ReturnType="Next"
+                           MaxLength="45"/>
+                </Frame>
+
+                <Frame StyleClass="EntryFrame"
+                       Grid.Row="16" Grid.ColumnSpan="2">
+                    <Entry Placeholder="Estado" 
+                           Text="{Binding Estado, Mode=TwoWay}"
+                           Keyboard="Text"
+                           ReturnType="Done"
+                           MaxLength="2"/>
+                </Frame>
+                
+                <Button Text="Salvar Endereço" 
+                        Command="{Binding SalvarEnderecoCommand}" 
+                        StyleClass="BotaoAmarelo"
+                        HorizontalOptions="FillAndExpand"
+                        Grid.Row="17"
+                        Grid.ColumnSpan="2"/>
+
+                <BoxView HeightRequest="1"
+                         BackgroundColor="{StaticResource Cinza}"
+                         VerticalOptions="Start"
+                         Grid.Row="18"
+                         Grid.ColumnSpan="2"/>
+
+                <Label Text="Contato"
+                       VerticalOptions="End"
+                       HorizontalOptions="Center"
+                       Grid.Row="18"
+                       Grid.ColumnSpan="2"/>
+
+                <Frame StyleClass="EntryFrame"
+                       Grid.Row="19" Grid.ColumnSpan="2">
+                    <Entry Placeholder="Numero de Celular" 
+                           Text="{Binding Telefone, Mode=TwoWay}"
+                           Keyboard="Telephone"
+                           ReturnType="Next"
+                           MaxLength="14">
+                        <Entry.Behaviors>
+                            <behaviorPack:MaskedBehavior Mask="(XX)XXXXX-XXXX" />
+                        </Entry.Behaviors>
+                    </Entry>
+                </Frame>
+
+                <Frame StyleClass="EntryFrame"
+                       Grid.Row="20" Grid.ColumnSpan="2">
+                    <control:BindablePicker Title="Tipo de Telefone"
+                                            x:Name="picTipoTelefone"
+                                            FontSize="15"
+                                            ItemsSource="{Binding ListaTipoTelefone}"
+                                            SelectedItem="{Binding TipoTelefone, Mode=TwoWay}"/>
+                </Frame>
+
+                <Frame StyleClass="EntryFrame"
+                       Grid.Row="21" Grid.ColumnSpan="2">
+                    <Entry Placeholder="Link do Instagram" 
+                           Text="{Binding Instagram, Mode=TwoWay}" 
+                           Keyboard="Url"
+                           ReturnType="Done"/>
+                </Frame>
+                
+                <Button Text="Salvar Contato" 
+                        Command="{Binding SalvarContatoCommand}" 
+                        StyleClass="BotaoAmarelo"
+                        HorizontalOptions="FillAndExpand"
+                        Grid.Row="22"
+                        Grid.ColumnSpan="2"/>
+
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+    
+</ContentPage>
