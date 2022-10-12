@@ -1,6 +1,7 @@
 ﻿using app_da_foto.Domain.Model;
 using App_da_Foto.Models;
 using Newtonsoft.Json;
+using Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,11 +72,10 @@ namespace App_da_Foto.Services
 
             else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
             {
-                String problemResponse = await response.Content.ReadAsStringAsync();
-                var errors = JsonConvert.DeserializeObject<ResponseService<IEnumerable<Fotografo>>>(problemResponse);
+                String problemResponse = await response.RequestMessage.Content.ReadAsStringAsync();
+                String errors = JsonConvert.DeserializeObject<String>(problemResponse);
 
-
-                responseService.Errors = errors.Errors;
+                responseService.Errors.Add(errors);
             }
             return responseService;
         }
@@ -94,12 +94,44 @@ namespace App_da_Foto.Services
             {
                 responseService.Data = await response.Content.ReadAsAsync<Fotografo>();
             }
+            else if (response.RequestMessage.Content == null)  
+            {
+                return responseService;
+            }
             else
             {
-                String problemResponse = await response.Content.ReadAsStringAsync();
-                var errors = JsonConvert.DeserializeObject<ResponseService<Fotografo>>(problemResponse);
+                String problemResponse = await response.RequestMessage.Content.ReadAsStringAsync();
+                String errors = JsonConvert.DeserializeObject<String>(problemResponse);
 
-                responseService.Errors = errors.Errors;
+                responseService.Errors.Add(errors);
+            }
+            return responseService;
+        }
+
+        public async Task<ResponseService<FotografoCompleto>> ObterFotografo(int id)
+        {
+            HttpResponseMessage response = await _client.GetAsync($"{BaseApiUrl}/api/Fotografo/{id}");
+
+            ResponseService<FotografoCompleto> responseService = new ResponseService<FotografoCompleto>
+            {
+                IsSuccess = response.IsSuccessStatusCode,
+                StatusCode = (int)response.StatusCode
+            };
+
+            if (response.IsSuccessStatusCode)
+            {
+                responseService.Data = await response.Content.ReadAsAsync<FotografoCompleto>();
+            }
+            else if (response.RequestMessage.Content == null)
+            {
+                return responseService;
+            }
+            else
+            {
+                String problemResponse = await response.RequestMessage.Content.ReadAsStringAsync();
+                String errors = JsonConvert.DeserializeObject<String>(problemResponse);
+
+                responseService.Errors.Add(errors);
             }
             return responseService;
         }
@@ -118,17 +150,48 @@ namespace App_da_Foto.Services
             {
                 responseService.Data = await response.Content.ReadAsAsync<Fotografo>();
             }
-            else if (responseService.StatusCode == 500)
+            else if (responseService.StatusCode == 400)
             {
-                await Shell.Current.DisplayAlert("E-mail já cadastrado!", responseService.StatusCode.ToString() + responseService.Errors.ToString(), "Ok");
+                await Shell.Current.DisplayAlert("Erro!", "E-mail já Cadastrado!", "Ok");
+            }
+            else if (response.RequestMessage.Content == null)
+            {
+                return responseService;
             }
             else
             {
-                String problemResponse = await response.Content.ReadAsStringAsync();
-                var errors = JsonConvert.DeserializeObject<ResponseService<Fotografo>>(problemResponse);
+                String problemResponse = await response.RequestMessage.Content.ReadAsStringAsync();
+                String errors = JsonConvert.DeserializeObject<String>(problemResponse);
 
-                responseService.Errors = errors.Errors;
+                responseService.Errors.Add(errors);
+            }
+            return responseService;
+        }
 
+        public async Task<ResponseService<Fotografo>> AtualizarFotografo(Fotografo fotografo)
+        {
+            HttpResponseMessage response = await _client.PutAsJsonAsync($"{BaseApiUrl}/api/Fotografo/{fotografo.Id}", fotografo);
+
+            ResponseService<Fotografo> responseService = new ResponseService<Fotografo>
+            {
+                IsSuccess = response.IsSuccessStatusCode,
+                StatusCode = (int)response.StatusCode
+            };
+
+            if (response.IsSuccessStatusCode)
+            {
+                responseService.Data = await response.Content.ReadAsAsync<Fotografo>();
+            }
+            else if (response.RequestMessage.Content == null)
+            {
+                return responseService;
+            }
+            else
+            {
+                String problemResponse = await response.RequestMessage.Content.ReadAsStringAsync();
+                String errors = JsonConvert.DeserializeObject<String>(problemResponse);
+
+                responseService.Errors.Add(errors);
             }
             return responseService;
         }

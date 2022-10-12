@@ -1,6 +1,7 @@
 ﻿using App_da_Foto.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Services.Interfaces;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
