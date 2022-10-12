@@ -3,158 +3,125 @@ using App_da_Foto.Models;
 using App_da_Foto.Services;
 using App_da_Foto.Utilities.Load;
 using App_da_Foto.Views;
+using Microsoft.AppCenter.Analytics;
 using Rg.Plugins.Popup.Extensions;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using Xamarin.Forms.Maps;
 
 namespace App_da_Foto.ViewModels
 {
     public class NovoFotografoViewModel : BaseViewModel
     {
         private string nome;
-        private string email;
-        private string especialidade;
-        private string senha;
-        private string message;
-
-        ObservableCollection<string> _listaEspecialidade;
-
         public string Nome
         {
             get => nome;
             set => SetProperty(ref nome, value);
         }
+
+        private string email;
         public string Email
         {
             get => email;
             set => SetProperty(ref email, value);
         }
+
+        private string especialidade;
         public string Especialidade
         {
             get => especialidade;
             set => SetProperty(ref especialidade, value);
         }
-        public string Senha
+
+        private string senha;
+        public string Text
         {
             get => senha;
             set => SetProperty(ref senha, value);
         }
+
+        private string message;
         public string Message 
         { 
             get => message; 
             set => SetProperty(ref message, value); 
         }
 
-        public ObservableCollection<string> ListaEspecialidade
-        {
-            get
-            {
-                return _listaEspecialidade;
-            }
-            set
-            {
-                _listaEspecialidade = value;
-                OnPropertyChanged();
-            }
-        }
-
         public NovoFotografoViewModel()
         {
             FotografoService = new FotografoService();
 
-            SaveCommand = new Command(OnSave, ValidateSave);
-            CancelCommand = new Command(OnCancel);
-            this.PropertyChanged +=
-                (_, __) => SaveCommand.ChangeCanExecute();
-
-            ListaEspecialidade = new ObservableCollection<string>
-            {
-                "Geral",
-                "Retrato",
-                "Casamentos",
-                "Gestante",
-                "New Born",
-                "Infantil",
-                "Corporativo",
-                "Produto",
-                "Preto e Branco",
-                "Publicitária",
-                "Moda",
-                "Macrofotografia",
-                "Microfotografia",
-                "Aérea",
-                "Artística",
-                "Fotojornalismo",
-                "Documental",
-                "Selvagem",
-                "Esportiva",
-                "Viagens",
-                "Subaquática",
-                "Erótica",
-                "Astronômica",
-                "Arquitetônica",
-                "Culinária",
-                "Paisagem",
-                "Científica"
-            };
+            SalvarFotografoCommand = new Command(OnSalvarFotografo);
+            CancelarCommand = new Command(OnCancelar);
+            PropertyChanged +=
+                (_, __) => SalvarFotografoCommand.ChangeCanExecute();
         }
 
-        public Command SaveCommand { get; }
-        public Command CancelCommand { get; }
+        public Command SalvarFotografoCommand { get; }
+        public Command CancelarCommand { get; }
 
-        private async void OnSave()
+        private async void OnSalvarFotografo()
         {
-            Message = String.Empty;
-
-            Fotografo newFotografo = new Fotografo()
+            if (ValidarSalvar())
             {
-                Nome = Nome,
-                Especialidade = Especialidade,
-                Email = Email,
-                Senha = Senha,
-            };
+                await Shell.Current.Navigation.PushPopupAsync(new Loading());
+                Analytics.TrackEvent("Cadastrar Fotografo");
+                Message = String.Empty;
 
-            await Shell.Current.Navigation.PushPopupAsync(new Loading());
-
-            try
-            {
-                ResponseService<Fotografo> responseService = await FotografoService.AdicionarFotografo(newFotografo);
-
-                if (responseService.IsSuccess)
+                Fotografo newFotografo = new Fotografo()
                 {
-                    await Shell.Current.DisplayAlert("Sucesso!", "Cadastrado realizado com Sucesso! Por favor realizar Login", "Ok");
-                    await Shell.Current.GoToAsync("..");
-                }
-                else
+                    Nome = Nome = Regex.Replace(nome, @"((^\w)|(\s|\p{P})\w)",
+                                    match => match.Value.ToUpper()),
+                    Especialidade = Especialidade,
+                    Email = Email.ToLower(),
+                    Senha = Text,
+                };
+
+                try
                 {
-                    await Shell.Current.DisplayAlert("Erro!", responseService.Errors.ToString(), "Ok");
-                    StringBuilder stringBuider = new StringBuilder();
-                    foreach (var dicKey in responseService.Errors)
+                    ResponseService<Fotografo> responseService = await FotografoService.AdicionarFotografo(newFotografo);
+
+                    if (responseService.IsSuccess)
                     {
-                        foreach (var message in dicKey.Value)
-                        {
-                            stringBuider.AppendLine(message);
-                        }
+                        await Shell.Current.DisplayAlert("Sucesso!", "Cadastrado realizado com Sucesso! Por favor realizar Login", "Ok");
+                        await Shell.Current.GoToAsync("..");
                     }
-                    Message = stringBuider.ToString();
+                    else
+                    {
+                        //StringBuilder stringBuider = new StringBuilder();
+                        //foreach (var dicKey in responseService.Errors)
+                        //{
+                        //    foreach (var message in dicKey.Value)
+                        //    {
+                        //        stringBuider.AppendLine(message);
+                        //    }
+                        //}
+                        //Message = stringBuider.ToString();
+                        Message = responseService.Errors.ToString();
+                        await Shell.Current.DisplayAlert("Erro!", Message, "Ok");
+                    }
                 }
+                catch
+                {
+                    Message = "E-mail já cadastrado!";
+                }
+                await Shell.Current.Navigation.PopAllPopupAsync();
             }
-            catch
+            else
             {
-                Message = "E-mail já cadastrado!";
+                await Shell.Current.DisplayAlert("Ops!", "Preencha todos os campos!", "Ok");
             }
-            await Shell.Current.Navigation.PopAllPopupAsync();
         }
 
-        private bool ValidateSave()
+        private bool ValidarSalvar()
         {
             return !String.IsNullOrWhiteSpace(nome)
                 && !String.IsNullOrWhiteSpace(especialidade)
@@ -162,7 +129,7 @@ namespace App_da_Foto.ViewModels
                 && !String.IsNullOrWhiteSpace(senha);
         }
 
-        private async void OnCancel()
+        private async void OnCancelar()
         {
             await Shell.Current.GoToAsync("..");
         }

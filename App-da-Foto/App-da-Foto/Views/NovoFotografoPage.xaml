@@ -2,8 +2,9 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             xmlns:behaviorPack="clr-namespace:Xamarin.Forms.BehaviorValidationPack;assembly=Xamarin.Forms.BehaviorValidationPack"
              xmlns:control="clr-namespace:App_da_Foto.Utilities.CustomView"
-             xmlns:viewModel="clr-namespace:App_da_Foto.ViewModels"
+             xmlns:viewModel="clr-namespace:App_da_Foto.ViewModels" 
              x:DataType="viewModel:NovoFotografoViewModel"
              x:Class="App_da_Foto.Views.NovoFotografoPage"
              ios:Page.UseSafeArea="true"
@@ -39,33 +40,56 @@
                    ReturnType="Next"
                    Keyboard="Email"
                    MaxLength="45"
-                   ClearButtonVisibility="WhileEditing"/>
+                   ClearButtonVisibility="WhileEditing">
+                <Entry.Behaviors>
+                    <behaviorPack:EmailValidationBehavior />
+                </Entry.Behaviors>
+            </Entry>
         </Frame>
 
         <Frame StyleClass="EntryFrame"
                    Grid.Row="6" Grid.ColumnSpan="2">
-            <Entry Text="{Binding Senha}"
+            <Entry x:Name="entsenha"
                    Placeholder="Senha"
+                   IsPassword="True"
+                   ReturnType="Next"
+                   MaxLength="50"
+                   ClearButtonVisibility="WhileEditing">
+                <Entry.Behaviors>
+                    <behaviorPack:PasswordValidationBehavior />
+                </Entry.Behaviors>
+            </Entry>
+        </Frame>
+        
+        <Frame StyleClass="EntryFrame"
+                   Grid.Row="7" Grid.ColumnSpan="2">
+            <Entry Placeholder="Confimar Senha"
+                   Text="{Binding Text}"
                    IsPassword="True"
                    ReturnType="Done"
                    MaxLength="50"
-                   ClearButtonVisibility="WhileEditing"/>
+                   ClearButtonVisibility="WhileEditing">
+                <Entry.Behaviors>
+                    <behaviorPack:PasswordValidationBehavior />
+                    <behaviorPack:CompareValidationBehavior BindingContext="{x:Reference entsenha}" />
+                </Entry.Behaviors>
+            </Entry>
         </Frame>
         
         <Label x:Name="TxtMessages" 
                Text="{Binding Message, Mode=OneWay}"
                TextColor="OrangeRed"
-               Grid.Row="7" Grid.ColumnSpan="2"/>
+               Grid.Row="8" Grid.ColumnSpan="2"/>
 
         <Button Text="Voltar" 
-                Command="{Binding CancelCommand}" 
+                Command="{Binding CancelarCommand}" 
                 HorizontalOptions="FillAndExpand"
                 Grid.Row="9"/>
 
         <Button Text="Cadastrar" 
                 TextColor="{StaticResource Preto}"
                 BackgroundColor="{StaticResource Amarelo}"
-                Command="{Binding SaveCommand}" 
+                Command="{Binding SalvarFotografoCommand}" 
                 HorizontalOptions="FillAndExpand" 
                 Grid.Row="9" Grid.Column="1"/>
 
