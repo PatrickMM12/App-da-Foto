@@ -4,6 +4,7 @@ using App_da_Foto.Services;
 using Repositories;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms;
@@ -12,11 +13,75 @@ namespace App_da_Foto.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        FotografoService fotografoService;
+        FotografoService fotografoService = new FotografoService();
         public FotografoService FotografoService 
         { 
             get => fotografoService; 
             set => fotografoService = value; 
+        }
+
+        EnderecoService enderecoService = new EnderecoService();
+        public EnderecoService EnderecoService
+        {
+            get => enderecoService;
+            set => enderecoService = value;
+        }
+
+        ContatoService contatoService = new ContatoService();
+        public ContatoService ContatoService
+        {
+            get => contatoService;
+            set => contatoService = value;
+        }
+
+        private ObservableCollection<string> _listaEspecialidade = new ObservableCollection<string>
+                {
+                "Geral",
+                "Retrato",
+                "Casamentos",
+                "Gestante",
+                "New Born",
+                "Infantil",
+                "Corporativo",
+                "Produto",
+                "Preto e Branco",
+                "Publicitária",
+                "Moda",
+                "Macrofotografia",
+                "Microfotografia",
+                "Aérea",
+                "Artística",
+                "Fotojornalismo",
+                "Documental",
+                "Selvagem",
+                "Esportiva",
+                "Viagens",
+                "Subaquática",
+                "Erótica",
+                "Astronômica",
+                "Arquitetônica",
+                "Culinária",
+                "Paisagem",
+                "Científica"
+                };
+        public ObservableCollection<string> ListaEspecialidade
+        {
+            get
+            {
+                return _listaEspecialidade;
+            }
+            set
+            {
+                _listaEspecialidade = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool logado;
+        public bool Logado
+        {
+            get => logado;
+            set => SetProperty(ref logado, value);
         }
 
         bool isBusy = false;
