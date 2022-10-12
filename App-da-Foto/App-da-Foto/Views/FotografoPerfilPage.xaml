@@ -5,18 +5,143 @@
              x:DataType="viewmodels:FotografoPerfilViewModel"
              x:Class="App_da_Foto.Views.FotografoPerfilPage"
              Title="{Binding Nome}"
-             Visual="Material">
+             Shell.NavBarHasShadow="False"
+             Shell.BackgroundColor="{StaticResource Amarelo}">
 
-    <StackLayout Spacing="40" Padding="15,30,15,15">
+    <NavigationPage.TitleView>
         <StackLayout>
-            <Label HorizontalOptions="Center" Text="Nome do Fotógrafo" FontSize="Large"/>
-            <Label HorizontalOptions="Center" Text="{Binding Nome}" FontSize="35" FontAttributes="Bold"/>
+            <Label FontFamily="MontserratRegular"/>
         </StackLayout>
+    </NavigationPage.TitleView>
 
-        <StackLayout>
-            <Label HorizontalOptions="Center" Text="Especialidade" FontSize="Large" />
-            <Label HorizontalOptions="Center" Text="{Binding Especialidade}" FontSize="35" FontAttributes="Bold"/>
-        </StackLayout>
-    </StackLayout>
+
+    <Grid RowDefinitions="200,50,50,50,*"
+          Padding="10">
+        
+        <Grid ColumnDefinitions="150,*"
+              RowDefinitions="150"
+              Padding="20">
+
+            <Frame BackgroundColor="{StaticResource Branco}"
+                    CornerRadius="100"
+                    HasShadow="True">
+
+                <Image Source="perfil"/>
+            </Frame>
+
+
+            <Grid Grid.Column="1"
+                  ColumnDefinitions="*,*"
+                  RowDefinitions="40,*">
+
+                <Label Text="Especialidade:" 
+                        FontSize="13"
+                       VerticalOptions="Center"/>
+
+                <Frame Padding="0" 
+                       BackgroundColor="{StaticResource Amarelo}"
+                       CornerRadius="20"
+                       HasShadow="False"
+                       Grid.Column="1"
+                       HorizontalOptions="StartAndExpand">
+
+                    <Label Text="{Binding Especialidade}" 
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           Margin="5"
+                           FontSize="17"
+                           FontFamily="MontserratBold"/>
+
+                </Frame>
+
+                <Frame Padding="15"
+                       BackgroundColor="{StaticResource WhatsApp}"
+                       CornerRadius="20"
+                       HasShadow="False"
+                       Grid.Row="1"
+                       HorizontalOptions="CenterAndExpand"
+                       VerticalOptions="End">
+                    <ImageButton Source="whatsapp_branco_24"
+                                 BackgroundColor="Transparent"
+                                 HeightRequest="50"
+                                 WidthRequest="60"/>
+                    
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1"
+                                              Command="{Binding WhatsAppCommand}"
+                                              CommandParameter="{Binding .}"/>
+                    </Frame.GestureRecognizers>
+                </Frame>
+
+                <Frame Padding="15" 
+                       CornerRadius="20"
+                       HasShadow="False"
+                       Grid.Row="1"
+                       Grid.Column="1"
+                       HorizontalOptions="CenterAndExpand"
+                       VerticalOptions="End">
+                    <ImageButton Source="instagram_branco_24"
+                                 BackgroundColor="Transparent"
+                                 HeightRequest="50"
+                                 WidthRequest="60"/>
+                    <Frame.Background>
+                        <LinearGradientBrush>
+                            <GradientStop Color="#774be0"
+                                          Offset="0.0"/>
+                            <GradientStop Color="#ee4365"
+                                          Offset="0.5"/>
+                            <GradientStop Color="#f2bb42"
+                                          Offset="1.1"/>
+                            
+                        </LinearGradientBrush>
+                    </Frame.Background>
+
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1"
+                                              Command="{Binding InstagramCommand}"
+                                              CommandParameter="{Binding .}"/>
+                    </Frame.GestureRecognizers>
+                </Frame>
+
+            </Grid>
+            
+        </Grid>
+        <Label Text="{Binding Nome}"
+               HorizontalOptions="Start"
+               VerticalOptions="Start"
+               LineBreakMode="TailTruncation"
+               FontSize="25"
+               FontFamily="MontserratBold"
+               Grid.Row="1"/>
+        <Label Text="Endereço"
+                HorizontalOptions="Start"
+                VerticalOptions="Start"
+                LineBreakMode="TailTruncation"
+                FontSize="20"
+                Grid.Row="2"/>
+        <Label Text="Alguma informação"
+                HorizontalOptions="Start"
+                VerticalOptions="Start"
+                LineBreakMode="TailTruncation"
+                FontSize="20"
+                Grid.Row="3"/>
+        <Grid Grid.Row="4"
+              ColumnDefinitions="*,*"
+              RowDefinitions="*,*"
+              >
+            <Image Source="perfil"
+                   BackgroundColor="{StaticResource Amarelo}"/>
+            <Image Source="perfil"
+                   BackgroundColor="{StaticResource Amarelo}"
+                   Grid.Row="1"/>
+            <Image Source="perfil"
+                   Grid.Column="1"
+                   BackgroundColor="{StaticResource Amarelo}"/>
+            <Image Source="perfil"
+                   BackgroundColor="{StaticResource Amarelo}"
+                   Grid.Column="1"
+                   Grid.Row="1"/>
+        </Grid>
+    </Grid>
     
 </ContentPage>
