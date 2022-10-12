@@ -3,6 +3,7 @@ using App_da_Foto.Models;
 using App_da_Foto.Services;
 using App_da_Foto.Utilities.Load;
 using App_da_Foto.Views;
+using Microsoft.AppCenter.Analytics;
 using Newtonsoft.Json;
 using Rg.Plugins.Popup.Extensions;
 using System;
@@ -42,32 +43,50 @@ namespace App_da_Foto.ViewModels
 
         private async void OnLoginFotografoClicked(object obj)
         {
+            Analytics.TrackEvent("Login Fotografo");
+            await Shell.Current.Navigation.PushPopupAsync(new Loading());
             if (Email == string.Empty || Senha == string.Empty || Email == null || Senha == null)
             {
                 await Shell.Current.DisplayAlert("Erro!", "Campo de E-mail e/ou senha vazio(s)!", "OK");
                 return;
             }
-            await Shell.Current.Navigation.PushPopupAsync(new Loading());
 
-            ResponseService<Fotografo> responseService = await FotografoService.ObterFotografo(email, senha);
-
-            if (responseService.IsSuccess)
+            try
             {
-                App.Current.Properties.Add("Fotografo", JsonConvert.SerializeObject(responseService.Data));
-                await App.Current.SavePropertiesAsync();
+                ResponseService<Fotografo> responseService = await FotografoService.ObterFotografo(email, senha);
 
-                App.Current.MainPage = new HomePage();
-            }
-            else
-            {
-                if (responseService.StatusCode == 404)
+                if (responseService.IsSuccess)
                 {
-                    await Shell.Current.DisplayAlert("Erro!", "E-mail e/ou senha incorreto(s)!", "OK");
+                    Fotografo fotografo = new Fotografo()
+                    {
+                        Id = responseService.Data.Id,
+                        Nome = responseService.Data.Nome,
+                        Especialidade = responseService.Data.Especialidade,
+                        Email = responseService.Data.Email,
+                    };
+
+                    App.Current.Properties["Fotografo"] = JsonConvert.SerializeObject(fotografo);
+                    await App.Current.SavePropertiesAsync();
+                    Logado = true;
+
+                    App.Current.MainPage = new HomePage();
                 }
                 else
                 {
-                    await Shell.Current.DisplayAlert("Erro!", "Oops! Ocorreu um erro inesperado! Tente novamente mais Tarde!", "OK");
+                    if (responseService.StatusCode == 404)
+                    {
+                        await Shell.Current.DisplayAlert("Erro!", "E-mail e/ou senha incorreto(s)!", "OK");
+                    }
+                    else
+                    {
+                        await Shell.Current.DisplayAlert("Erro!", "Oops! Ocorreu um erro inesperado! Tente novamente mais Tarde! Erro: " + responseService.Errors.ToString() , "OK");
+                    }
                 }
+
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Erro!", "Oops! Ocorreu um erro inesperado! Tente novamente mais Tarde! Erro: " + ex.Message.ToString(), "OK");
             }
             await Shell.Current.Navigation.PopAllPopupAsync();
         }
