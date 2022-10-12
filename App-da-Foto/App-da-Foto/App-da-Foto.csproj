@@ -7,7 +7,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Utilities\Fontes\Montserrat-Bold.ttf" />
+    <None Remove="Utilities\Fontes\Montserrat-Light.ttf" />
+    <None Remove="Utilities\Fontes\Montserrat-Regular.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Utilities\Fontes\Montserrat-Bold.ttf" />
+    <EmbeddedResource Include="Utilities\Fontes\Montserrat-Light.ttf" />
+    <EmbeddedResource Include="Utilities\Fontes\Montserrat-Regular.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Geocoding.Core" Version="4.0.1" />
+    <PackageReference Include="Geocoding.Google" Version="4.0.1" />
     <PackageReference Include="MaterialDesignThemes" Version="4.5.0" />
+    <PackageReference Include="Microsoft.AppCenter" Version="4.5.3" />
+    <PackageReference Include="Microsoft.AppCenter.Analytics" Version="4.5.3" />
+    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.5.3" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.9" />
     <PackageReference Include="Microsoft.Net.Http" Version="2.2.29" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
@@ -17,8 +34,9 @@
     <PackageReference Include="Xam.Plugin.Media" Version="5.0.1" />  
     <PackageReference Include="Xamarin.Essentials" Version="1.7.3" />  
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2515" />  
-    <PackageReference Include="Xamarin.Forms.GoogleMaps" Version="3.3.0" />  
-    <PackageReference Include="Xamarin.Forms.Maps" Version="5.0.0.2515" />  
+    <PackageReference Include="Xamarin.Forms.BehaviorValidationPack" Version="1.1.1" />  
+    <PackageReference Include="Xamarin.Forms.GoogleMaps" Version="5.0.0" />  
+    <PackageReference Include="Xamarin.Forms.OpenWhatsApp" Version="1.0.1" />  
     <PackageReference Include="Xamarin.Forms.Visual.Material" Version="5.0.0.2515" />  
     <PackageReference Include="Xamstrap" Version="0.1.0-pre01" />
   </ItemGroup>
@@ -31,8 +49,8 @@
     <Compile Update="Views\SairPage.xaml.cs">
       <DependentUpon>SairPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\NovoEnderecoPage.xaml.cs">
-      <DependentUpon>NovoEnderecoPage.xaml</DependentUpon>
+    <Compile Update="Views\EditarPerfilPage.xaml.cs">
+      <DependentUpon>EditarPerfilPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\NovoFotografoPage.xaml.cs">
       <DependentUpon>NovoFotografoPage.xaml</DependentUpon>
@@ -59,6 +77,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\MapaPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\MenuPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

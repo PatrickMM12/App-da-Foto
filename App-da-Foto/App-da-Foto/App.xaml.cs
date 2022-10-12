@@ -1,7 +1,14 @@
-﻿using App_da_Foto.Views;
+﻿using app_da_foto.Domain.Model;
+using App_da_Foto.Views;
+using Geocoding;
+using Geocoding.Google;
 using Repositories;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Xamarin.Forms;
+using Xamarin.Forms.GoogleMaps;
 
 namespace App_da_Foto
 {
@@ -25,5 +32,7 @@ namespace App_da_Foto
         protected override void OnResume()
         {
         }
+
+        
     }
 }

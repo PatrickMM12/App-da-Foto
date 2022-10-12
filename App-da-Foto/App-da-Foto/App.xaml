@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:control="clr-namespace:App_da_Foto.Utilities.CustomView"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="App_da_Foto.App">
     
@@ -7,23 +8,21 @@
         <ResourceDictionary>
             <Color x:Key="Primary">#FFD700</Color>
             <Color x:Key="Amarelo">#FFD700</Color>
+            <Color x:Key="AmareloSuave">#FFFBE8</Color>
 
             <Color x:Key="Preto">#000000</Color>
             <Color x:Key="Branco">#FFFFFF</Color>
 
+            <Color x:Key="CinzaSuave">#F1F1F1</Color>
             <Color x:Key="Cinza">#D8D8D8</Color>
             <Color x:Key="CinzaEscuro">#5A5A5A</Color>
 
+            <Color x:Key="WhatsApp">#34af23</Color>
+            <Color x:Key="Instagram">#3f729b</Color>
+
+
             <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
                 <Setter Property="NavigationPage.HasNavigationBar" Value="False"/>
-            </Style>
-
-            <Style TargetType="TabbedPage" ApplyToDerivedTypes="True">
-                <Setter Property="NavigationPage.HasNavigationBar" Value="False"/>
-                <Setter Property="BarBackgroundColor" Value="{StaticResource Amarelo}"/>
-                <Setter Property="UnselectedTabColor" Value="{StaticResource CinzaEscuro}"/>
-                <Setter Property="SelectedTabColor" Value="{StaticResource Preto}"/>
-                <Setter Property="Title"  Value="{Binding Title}"/>
             </Style>
 
             <Style TargetType="Frame" Class="EntryFrame">
@@ -42,6 +41,12 @@
                 <Setter Property="HorizontalTextAlignment" Value="Center"/>
             </Style>
 
+            <Style TargetType="Label" x:Key="TextPrimary">
+                <Setter Property="TextColor" Value="{StaticResource CinzaEscuro}" />
+                <Setter Property="FontFamily" Value="MontserratRegular" />
+                <Setter Property="FontSize" Value="15" />
+            </Style>
+
             <Style TargetType="Entry">
                 <Setter Property="BackgroundColor" Value="Transparent" />
                 <Setter Property="TextColor" Value="{StaticResource Preto}" />
@@ -52,7 +57,7 @@
             </Style>
 
             <Style TargetType="Button">
-                <Setter Property="TextColor" Value="{StaticResource Branco}"></Setter>
+                <Setter Property="TextColor" Value="{StaticResource Branco}"/>
                 <Setter Property="BackgroundColor" Value="{StaticResource Preto}" />
                 <Setter Property="CornerRadius" Value="5" />
                 <Setter Property="FontFamily" Value="MontserratBold" />
@@ -61,14 +66,30 @@
             </Style>
 
             <Style TargetType="Button" Class="BotaoAmarelo">
-                <Setter Property="TextColor" Value="{StaticResource Preto}"></Setter>
+                <Setter Property="TextColor" Value="{StaticResource Preto}"/>
                 <Setter Property="BackgroundColor" Value="{StaticResource Amarelo}" />
                 <Setter Property="CornerRadius" Value="5" />
                 <Setter Property="FontFamily" Value="MontserratBold" />
                 <Setter Property="FontSize" Value="12" />
             </Style>
 
+            <Style TargetType="Button" Class="BotaoMenu">
+                <Setter Property="TextColor" Value="{StaticResource Preto}"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource Cinza}" />
+                <Setter Property="CornerRadius" Value="5" />
+                <Setter Property="FontFamily" Value="MontserratBold" />
+                <Setter Property="FontSize" Value="17" />
+                <Setter Property="Padding" Value="30,0" />
+                <Setter Property="FontAttributes" Value="Bold" />
+            </Style>
+
             <Style TargetType="Picker">
+                <Setter Property="FontFamily" Value="MontserratRegular" />
+                <Setter Property="FontSize" Value="15" />
+                <Setter Property="TextColor" Value="{StaticResource Preto}" />
+            </Style>
+
+            <Style TargetType="control:BindablePicker">
                 <Setter Property="FontFamily" Value="MontserratRegular" />
                 <Setter Property="FontSize" Value="15" />
                 <Setter Property="TextColor" Value="{StaticResource Preto}" />
@@ -79,6 +100,13 @@
                 <Setter Property="FontSize" Value="15" />
                 <Setter Property="TextColor" Value="{StaticResource Preto}" />
                 <Setter Property="Format" Value="dd/MM/yyyy" />
+            </Style>
+            
+            <Style TargetType="control:BindableDatePicker">
+                <Setter Property="FontFamily" Value="MontserratRegular" />
+                <Setter Property="FontSize" Value="15" />
+                <Setter Property="Format" Value="dd/MM/yyyy" />
+                <Setter Property="MinimumDate" Value="01/01/1900" />
             </Style>
 
         </ResourceDictionary>        
