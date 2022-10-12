@@ -1,4 +1,5 @@
 ﻿using App_da_Foto.ViewModels;
+using Microsoft.AppCenter.Analytics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,18 +16,7 @@ namespace App_da_Foto.Views
         public SairPage()
         {
             InitializeComponent();
-        }
-
-        private async void Sair(object sender, EventArgs e)
-        {
-            App.Current.Properties.Remove("Fotografo");
-            await App.Current.SavePropertiesAsync();
-            await Shell.Current.GoToAsync("///LoginPage");
-        }
-
-        private void Voltar(object sender, EventArgs e)
-        {
-            Shell.Current.GoToAsync("..");
+            BindingContext = new SairViewModel();
         }
     }
 }

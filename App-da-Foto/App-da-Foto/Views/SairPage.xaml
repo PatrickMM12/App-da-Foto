@@ -3,8 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:Control="clr-namespace:Xamstrap;assembly=Xamstrap"
-             xmlns:Attached="clr-namespace:Xamstrap.AttachedProperties;assembly=Xamstrap"
+             xmlns:viewModel="clr-namespace:App_da_Foto.ViewModels" 
+             x:DataType="viewModel:SairViewModel"
              mc:Ignorable="d"
              x:Class="App_da_Foto.Views.SairPage"
              Shell.NavBarIsVisible="False"
@@ -23,16 +23,15 @@
                    FontSize="25"
                    Grid.Row="3" Grid.Column="0"
                    Grid.ColumnSpan="2"/>
-            
 
             <Button Text="Sim"
-                    Clicked="Sair"
+                    Command="{Binding SairCommand}"
                     FontSize="15"
                     Grid.Column="1" Grid.Row="5"/>
 
             <Button Text="Não" StyleClass="BotaoAmarelo"
                     FontSize="15"
-                    Clicked="Voltar"
+                    Command="{Binding VoltarCommand}"
                     Grid.Column="0" Grid.Row="5"/>
         </Grid>
         
