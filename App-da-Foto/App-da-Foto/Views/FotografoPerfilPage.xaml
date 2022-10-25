@@ -32,19 +32,21 @@
 
             <Grid Grid.Column="1"
                   ColumnDefinitions="*,*"
-                  RowDefinitions="40,*">
+                  RowDefinitions="40,*,*">
 
                 <Label Text="Especialidade:" 
                        FontSize="13"
-                       VerticalOptions="Center"/>
+                       VerticalOptions="End"
+                       Grid.ColumnSpan="2"/>
 
                 <Frame Padding="0" 
                        BackgroundColor="{StaticResource Amarelo}"
                        CornerRadius="20"
                        HasShadow="False"
-                       Grid.Column="1"
-                       HorizontalOptions="StartAndExpand"
-                       VerticalOptions="Center">
+                       Grid.Row="1"
+                       Grid.ColumnSpan="2"
+                       HorizontalOptions="CenterAndExpand"
+                       VerticalOptions="Start">
 
                     <Label Text="{Binding Especialidade}" 
                            HorizontalOptions="StartAndExpand"
@@ -54,13 +56,13 @@
                            FontFamily="MontserratBold"/>
                 </Frame>
 
-                <Frame Padding="15"
+                <Frame Padding="10"
                        BackgroundColor="{StaticResource WhatsApp}"
                        CornerRadius="20"
                        HasShadow="False"
-                       Grid.Row="1"
+                       Grid.Row="2"
                        HorizontalOptions="CenterAndExpand"
-                       VerticalOptions="End">
+                       VerticalOptions="EndAndExpand">
                     <ImageButton Source="whatsapp_branco_24"
                                  BackgroundColor="Transparent"
                                  HeightRequest="50"
@@ -74,10 +76,10 @@
                     </Frame.GestureRecognizers>
                 </Frame>
 
-                <Frame Padding="15" 
+                <Frame Padding="10" 
                        CornerRadius="20"
                        HasShadow="False"
-                       Grid.Row="1"
+                       Grid.Row="2"
                        Grid.Column="1"
                        HorizontalOptions="CenterAndExpand"
                        VerticalOptions="End">

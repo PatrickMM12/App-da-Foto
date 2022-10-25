@@ -53,7 +53,6 @@ namespace App_da_Foto.Services
 
             if (response.IsSuccessStatusCode)
             {
-                //responseService = await response.Content.ReadAsAsync<ResponseService<List<EnderecoFotografo>>>();
                 enderecos = await response.Content.ReadAsAsync<IEnumerable<EnderecoFotografo>>();
             }
 

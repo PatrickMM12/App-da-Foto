@@ -25,7 +25,6 @@ using Xamarin.Forms.GoogleMaps;
 using Xamarin.Forms.PlatformConfiguration;
 using App_da_Foto.Views;
 using System.IO;
-using Windows.Storage;
 using System.Threading;
 
 namespace App_da_Foto.ViewModels

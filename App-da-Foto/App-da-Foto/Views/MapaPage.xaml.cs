@@ -98,10 +98,6 @@ namespace App_da_Foto.Views
         {
             try
             {
-                //var localizacao = CrossGeolocator.Current;
-                //localizacao.DesiredAccuracy = 50;
-                //var posicao = await localizacao.GetPositionAsync(TimeSpan.FromSeconds(10.0));
-
                 var localizacao = Geolocation.GetLastKnownLocationAsync();
 
                 if (localizacao != null & localizacao.IsCompleted)
