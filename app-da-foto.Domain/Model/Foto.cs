@@ -13,15 +13,14 @@ namespace app_da_foto.Domain.Model
         public string NomeArquivo { get; set; }
 
         [Required]
-        public string Imagem { get; set; }
+        public byte[] Imagem { get; set; }
 
-        [Required]
         public string MIME { get; set; }
 
 
         public string HoraUpload { get; set; }
 
-
+        [Required]
         public string Perfil { get; set; }
 
         [Required]
