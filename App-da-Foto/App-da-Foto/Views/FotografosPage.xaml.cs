@@ -2,7 +2,6 @@
 using App_da_Foto.Models;
 using App_da_Foto.Services;
 using App_da_Foto.ViewModels;
-using Repositories;
 using System.Collections.Generic;
 using System.Linq;
 using Xamarin.Forms;

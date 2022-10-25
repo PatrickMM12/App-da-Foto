@@ -35,7 +35,7 @@
                   RowDefinitions="40,*">
 
                 <Label Text="Especialidade:" 
-                        FontSize="13"
+                       FontSize="13"
                        VerticalOptions="Center"/>
 
                 <Frame Padding="0" 
@@ -43,15 +43,15 @@
                        CornerRadius="20"
                        HasShadow="False"
                        Grid.Column="1"
-                       HorizontalOptions="StartAndExpand">
+                       HorizontalOptions="StartAndExpand"
+                       VerticalOptions="Center">
 
                     <Label Text="{Binding Especialidade}" 
-                           HorizontalOptions="Center"
+                           HorizontalOptions="StartAndExpand"
                            VerticalOptions="Center"
-                           Margin="5"
+                           Margin="0,5"
                            FontSize="17"
                            FontFamily="MontserratBold"/>
-
                 </Frame>
 
                 <Frame Padding="15"
@@ -64,7 +64,8 @@
                     <ImageButton Source="whatsapp_branco_24"
                                  BackgroundColor="Transparent"
                                  HeightRequest="50"
-                                 WidthRequest="60"/>
+                                 WidthRequest="60"
+                                 Command="{Binding WhatsAppCommand}"/>
                     
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="1"
@@ -83,7 +84,8 @@
                     <ImageButton Source="instagram_branco_24"
                                  BackgroundColor="Transparent"
                                  HeightRequest="50"
-                                 WidthRequest="60"/>
+                                 WidthRequest="60"
+                                 Command="{Binding InstagramCommand}"/>
                     <Frame.Background>
                         <LinearGradientBrush>
                             <GradientStop Color="#774be0"
@@ -113,34 +115,20 @@
                FontSize="25"
                FontFamily="MontserratBold"
                Grid.Row="1"/>
-        <Label Text="Endereço"
+        <Label Text="{Binding Endereco}"
                 HorizontalOptions="Start"
                 VerticalOptions="Start"
                 LineBreakMode="TailTruncation"
                 FontSize="20"
                 Grid.Row="2"/>
-        <Label Text="Alguma informação"
-                HorizontalOptions="Start"
-                VerticalOptions="Start"
-                LineBreakMode="TailTruncation"
-                FontSize="20"
-                Grid.Row="3"/>
+        <BoxView BackgroundColor="{StaticResource Cinza}"
+                                     Grid.Row="3" Grid.ColumnSpan="1"
+                                     HeightRequest="1"
+                 VerticalOptions="Start"/>
         <Grid Grid.Row="4"
               ColumnDefinitions="*,*"
               RowDefinitions="*,*"
               >
-            <Image Source="perfil"
-                   BackgroundColor="{StaticResource Amarelo}"/>
-            <Image Source="perfil"
-                   BackgroundColor="{StaticResource Amarelo}"
-                   Grid.Row="1"/>
-            <Image Source="perfil"
-                   Grid.Column="1"
-                   BackgroundColor="{StaticResource Amarelo}"/>
-            <Image Source="perfil"
-                   BackgroundColor="{StaticResource Amarelo}"
-                   Grid.Column="1"
-                   Grid.Row="1"/>
         </Grid>
     </Grid>
     

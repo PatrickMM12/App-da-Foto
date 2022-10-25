@@ -1,34 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps" 
+             xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps" 
+             xmlns:viewModel="clr-namespace:App_da_Foto.ViewModels" 
+             x:DataType="viewModel:MapaViewModel"
              x:Class="App_da_Foto.Views.MapaPage"
              Shell.NavBarIsVisible="False">
 
-    <ContentPage.Content>
-        
-        <maps:Map IsShowingUser="True"
-                  HasScrollEnabled="True"
-                  HasZoomEnabled="True"
-                  MoveToLastRegionOnLayoutChange="True"
-                  TrafficEnabled="False">
+    <Grid>
 
-            <x:Arguments>
-                <maps:MapSpan>
-                    <x:Arguments>
-                        <maps:Position >
-                            <x:Arguments>
-                                <x:Double>-23.5499158</x:Double>
-                                <x:Double>-46.6334289</x:Double>
-                            </x:Arguments>
-                        </maps:Position>
-                        <x:Double>0.01</x:Double>
-                        <x:Double>0.01</x:Double>
-                    </x:Arguments>
-                </maps:MapSpan>
-            </x:Arguments>
+        <maps:Map x:Name="map" 
+                  MyLocationEnabled="True"
+                  InfoWindowClicked="IrPerfilFotografo"
+                  CameraChanged="CarregarPinsFotografos"
+                  HasScrollEnabled="True">
         </maps:Map>
-        
-    </ContentPage.Content>
+    </Grid>
     
 </ContentPage>
