@@ -4,6 +4,13 @@ using Android.App;
 using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
+using Geocoding.Google;
+using Geocoding;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
+using System.Drawing;
+using Xamarin.Forms.GoogleMaps.Android;
 
 namespace App_da_Foto.Droid
 {
@@ -45,8 +52,17 @@ namespace App_da_Foto.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             global::Xamarin.Forms.FormsMaterial.Init(this, savedInstanceState);
-            Xamarin.FormsMaps.Init(this, savedInstanceState);
+
+            var platformConfig = new PlatformConfig
+            {
+                BitmapDescriptorFactory = new BitmapConfig()
+            };
+            Xamarin.FormsGoogleMaps.Init(this, savedInstanceState, platformConfig);
+
             LoadApplication(new App());
+
+            AppCenter.Start("84185992-01db-4e19-99b3-fe0c794b3744",
+                   typeof(Analytics), typeof(Crashes));
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
