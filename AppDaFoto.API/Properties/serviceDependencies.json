@@ -1,3 +1,12 @@
 {
-  "dependencies": {}
+  "dependencies": {
+    "mssql1": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:ProductionConnection",
+      "dynamicId": null
+    },
+    "apis1": {
+      "type": "apis"
+    }
+  }
 }

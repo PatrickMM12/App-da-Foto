@@ -1,3 +1,16 @@
 {
-  "dependencies": {}
+  "dependencies": {
+    "mssql1": {
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/appdafotoapidbserver/databases/APPDAFOTO",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:ProductionConnection",
+      "dynamicId": null
+    },
+    "apis1": {
+      "apiEndpoint": "https://appdafotoapi.azure-api.net/",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.ApiManagement/service/appdafotoapi/apis/app-da-fotoAPI",
+      "type": "apis.azure"
+    }
+  }
 }
