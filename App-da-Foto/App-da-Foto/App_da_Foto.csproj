@@ -10,18 +10,19 @@
     <None Remove="Utilities\Fontes\Montserrat-Bold.ttf" />
     <None Remove="Utilities\Fontes\Montserrat-Light.ttf" />
     <None Remove="Utilities\Fontes\Montserrat-Regular.ttf" />
+    <None Remove="Utilities\Imagens\perfil.png" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Utilities\Fontes\Montserrat-Bold.ttf" />
     <EmbeddedResource Include="Utilities\Fontes\Montserrat-Light.ttf" />
     <EmbeddedResource Include="Utilities\Fontes\Montserrat-Regular.ttf" />
+    <EmbeddedResource Include="Utilities\Imagens\perfil.png" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Geocoding.Core" Version="4.0.1" />
     <PackageReference Include="Geocoding.Google" Version="4.0.1" />
-    <PackageReference Include="MaterialDesignThemes" Version="4.5.0" />
     <PackageReference Include="Microsoft.AppCenter" Version="4.5.3" />
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="4.5.3" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.5.3" />
@@ -31,11 +32,12 @@
     <PackageReference Include="Rg.Plugins.Popup" Version="1.2.0.223" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
+    <PackageReference Include="Uno.UI" Version="4.5.14" />
     <PackageReference Include="Xam.Plugin.Media" Version="5.0.1" />  
     <PackageReference Include="Xamarin.Essentials" Version="1.7.3" />  
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2515" />  
     <PackageReference Include="Xamarin.Forms.BehaviorValidationPack" Version="1.1.1" />  
-    <PackageReference Include="Xamarin.Forms.GoogleMaps" Version="5.0.0" />  
+    <PackageReference Include="Xamarin.Forms.GoogleMaps" Version="3.3.0" />  
     <PackageReference Include="Xamarin.Forms.OpenWhatsApp" Version="1.0.1" />  
     <PackageReference Include="Xamarin.Forms.Visual.Material" Version="5.0.0.2515" />  
     <PackageReference Include="Xamstrap" Version="0.1.0-pre01" />

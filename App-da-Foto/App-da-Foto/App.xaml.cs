@@ -2,7 +2,6 @@
 using App_da_Foto.Views;
 using Geocoding;
 using Geocoding.Google;
-using Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
