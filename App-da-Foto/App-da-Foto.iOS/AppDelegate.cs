@@ -13,7 +13,7 @@ namespace App_da_Foto.iOS
             global::Xamarin.Forms.Forms.Init();
             global::Xamarin.Forms.Forms.Init();
             global::Xamarin.Forms.FormsMaterial.Init();
-            Xamarin.FormsMaps.Init();
+            Xamarin.FormsGoogleMaps.Init("AIzaSyAcv-1gWQrPM8JhT7hKfNGhPvPn3o_jNPA");
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);

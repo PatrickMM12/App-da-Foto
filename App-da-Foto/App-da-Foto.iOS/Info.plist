@@ -70,5 +70,10 @@
 	<string>LaunchScreen</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
+
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Podemos usar sua Localização</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Nós estamos usando sua localização</string>
 </dict>
 </plist>
