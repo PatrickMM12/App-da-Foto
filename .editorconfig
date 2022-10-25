@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# CS5001: Programa não contém um método "Main" estático adequado para um ponto de entrada
+dotnet_diagnostic.CS5001.severity = suggestion
