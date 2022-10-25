@@ -23,13 +23,17 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
 using Xamarin.Forms.PlatformConfiguration;
+using App_da_Foto.Views;
+using System.IO;
+using Windows.Storage;
+using System.Threading;
 
 namespace App_da_Foto.ViewModels
 {
     class EditarPerfilViewModel : BaseViewModel
     {
         private int id;
-        public int Id 
+        public int Id
         {
             get
             {
@@ -186,6 +190,48 @@ namespace App_da_Foto.ViewModels
             set => SetProperty(ref message, value);
         }
 
+        private Foto foto;
+        public Foto Foto
+        {
+            get => foto;
+            set => foto = value;
+        }
+
+        private bool fotoNull = true;
+        public bool FotoNull
+        {
+            get => fotoNull;
+            set => SetProperty(ref fotoNull, value);
+        }
+
+        private bool fotoCarregada = false;
+        public bool FotoCarregada
+        {
+            get => fotoCarregada;
+            set => SetProperty(ref fotoCarregada, value);
+        }
+
+        private ImageSource fotoPerfil;
+        public ImageSource FotoPerfil
+        {
+            get => fotoPerfil;
+            set => fotoPerfil = value;
+        }
+
+        private Stream fotoPerfilStream;
+        public Stream FotoPerfilStream
+        {
+            get => fotoPerfilStream;
+            set => fotoPerfilStream = value;
+        }
+
+        private byte[] fotoPerfilByte;
+        public byte[] FotoPerfilByte
+        {
+            get => fotoPerfilByte;
+            set => fotoPerfilByte = value;
+        }
+
         private ObservableCollection<string> _listaTipoTelefone = new ObservableCollection<string>
                 {
                 "CEL",
@@ -206,7 +252,7 @@ namespace App_da_Foto.ViewModels
         }
 
         FotografoCompletoService fotografoCompletoService;
-        public FotografoCompletoService FotografoCompletoService 
+        public FotografoCompletoService FotografoCompletoService
         {
             get { return fotografoCompletoService; }
             set { SetProperty(ref fotografoCompletoService, value); }
@@ -220,98 +266,28 @@ namespace App_da_Foto.ViewModels
         public Command CarregarCommand { get; }
 
         IGeocoder geocoder;
-        public IGeocoder Geocoder 
-        { 
-            get => geocoder; 
-            set => geocoder = value; 
-        }
-
-        string _originLatitud;
-        string _originLongitud;
-        string _destinationLatitud;
-        string _destinationLongitud;
-
-        string _pickupText;
-        public string PickupText
+        public IGeocoder Geocoder
         {
-            get
-            {
-                return _pickupText;
-            }
-            set
-            {
-                _pickupText = value;
-                if (!string.IsNullOrEmpty(_pickupText))
-                {
-                    _isPickupFocused = true;
-                    GetPlacesCommand.Execute(_pickupText);
-                }
-            }
+            get => geocoder;
+            set => geocoder = value;
         }
-
-        string _originText;
-        public string OriginText
-        {
-            get
-            {
-                return _originText;
-            }
-            set
-            {
-                _originText = value;
-                if (!string.IsNullOrEmpty(_originText))
-                {
-                    _isPickupFocused = false;
-                    GetPlacesCommand.Execute(_originText);
-                }
-            }
-        }
-
-        IGoogleMapsApiService googleMapsApi = new GoogleMapsApiService();
-
-        public ObservableCollection<GooglePlaceAutoCompletePrediction> Places { get; set; }
-        public ObservableCollection<GooglePlaceAutoCompletePrediction> RecentPlaces { get; set; } = new ObservableCollection<GooglePlaceAutoCompletePrediction>();
-        
-        GooglePlaceAutoCompletePrediction _placeSelected;
-        public GooglePlaceAutoCompletePrediction PlaceSelected
-        {
-            get
-            {
-                return _placeSelected;
-            }
-            set
-            {
-                _placeSelected = value;
-                if (_placeSelected != null)
-                    GetPlaceDetailCommand.Execute(_placeSelected);
-            }
-        }
-
-        public ICommand FocusOriginCommand { get; set; }
-        public ICommand GetPlacesCommand { get; set; }
-        public ICommand GetPlaceDetailCommand { get; set; }
-        public ICommand GetLocationNameCommand { get; set; }
-
-        public bool ShowRecentPlaces { get; set; }
-
-        bool _isPickupFocused = true;
 
         public EditarPerfilViewModel()
         {
             FotografoCompletoService = new FotografoCompletoService();
+            Foto = new Foto();
 
             CarregarCommand = new Command(async () => await OnCarregarFotografoCompleto());
             SalvarFotografoCommand = new Command(OnSalvarFotografo, ValidarSalvarFotografo);
             this.PropertyChanged +=
                 (_, __) => SalvarFotografoCommand.ChangeCanExecute();
+
             SalvarEnderecoCommand = new Command(OnSalvarEndereco);
             BuscarCepCommand = new Command(BuscarCEP);
+
             SalvarContatoCommand = new Command(OnSalvarContato);
-            CancelCommand = new Command(OnCancel);
 
             Geocoder = new GoogleGeocoder() { ApiKey = "AIzaSyD26qsgGUZ3IasPhI4S2HNXTQi6oQ_RMRo" };
-            GetPlacesCommand = new Command<string>(async (param) => await GetPlacesByName(param));
-            GetPlaceDetailCommand = new Command<GooglePlaceAutoCompletePrediction>(async (param) => await GetPlacesDetail(param));
         }
 
         public async Task OnAparecendo()
@@ -340,6 +316,14 @@ namespace App_da_Foto.ViewModels
                     }
                     Email = responseService.Data.Fotografo.Email;
                     Senha = responseService.Data.Fotografo.Senha;
+
+                    if (responseService.Data.FotoPerfil != null)
+                    {
+                        Foto = responseService.Data.FotoPerfil;
+                        FotoPerfilStream = new MemoryStream(Foto.Imagem);
+                        FotoPerfil = ImageSource.FromStream(() => FotoPerfilStream);
+                        FotoNull = false;
+                    }
 
                     if (responseService.Data.Endereco != null)
                     {
@@ -378,7 +362,7 @@ namespace App_da_Foto.ViewModels
 
         private async void OnSalvarFotografo()
         {
-            if(ValidarSalvarFotografo())
+            if (ValidarSalvarFotografo())
             {
                 Analytics.TrackEvent("Atualizar Fotografo");
                 await Shell.Current.Navigation.PushPopupAsync(new Loading());
@@ -396,26 +380,42 @@ namespace App_da_Foto.ViewModels
                         Email = Email.ToLower(),
                         Senha = Senha,
                     };
+
+                    ResponseService<Foto> responseServiceFoto = new ResponseService<Foto>();
+
+
+                    // Foto de Perfil: Em desenvolvimento
+
+                    if (FotoPerfil != null)
+                    {
+                        Foto foto = new Foto()
+                        {
+                            NomeArquivo = "Perfil" + id.ToString(),
+                            Imagem = FotoPerfilByte,
+                            Perfil = "S",
+                            IdFotografo = Id,
+                        };
+
+
+                        if (FotoNull == true)
+                        {
+                            responseServiceFoto = await FotoService.AdicionarFoto(foto);
+                        }
+                        else
+                        {
+                            responseServiceFoto = await FotoService.AtualizarFoto(foto);
+                        }
+                    }
                     ResponseService<Fotografo> responseService = await FotografoService.AtualizarFotografo(newFotografo);
+
 
                     if (responseService.IsSuccess)
                     {
                         await Shell.Current.DisplayAlert("Sucesso!", "Cadastrado atualizado com Sucesso!", "Ok");
                     }
-
                     else
                     {
-                        //await Shell.Current.DisplayAlert("Erro!", responseService.Errors.ToString(), "Ok");
-                        //StringBuilder stringBuider = new StringBuilder();
-                        //foreach (var dicKey in responseService.Errors)
-                        //{
-                        //    foreach (var message in dicKey.Value)
-                        //    {
-                        //        stringBuider.AppendLine(message);
-                        //    }
-                        //}
-                        //Message = stringBuider.ToString();
-                        Message = responseService.Errors.ToString();
+                        Message = responseServiceFoto.Errors.ToString();
                         await Shell.Current.DisplayAlert("Erro!", Message, "Ok");
                     }
                 }
@@ -478,7 +478,7 @@ namespace App_da_Foto.ViewModels
                         IdFotografo = Id
                     };
 
-                    ResponseService < Endereco > responseService = new ResponseService<Endereco>();
+                    ResponseService<Endereco> responseService = new ResponseService<Endereco>();
 
                     if (EnderecoNull == true)
                     {
@@ -497,16 +497,6 @@ namespace App_da_Foto.ViewModels
 
                     else
                     {
-                        //await Shell.Current.DisplayAlert("Erro!", responseService.Errors.ToString(), "Ok");
-                        //StringBuilder stringBuider = new StringBuilder();
-                        //foreach (var dicKey in responseService.Errors)
-                        //{
-                        //    foreach (var message in dicKey.Value)
-                        //    {
-                        //        stringBuider.AppendLine(message);
-                        //    }
-                        //}
-                        //Message = stringBuider.ToString();
                         Message = responseService.Errors.ToString();
                         await Shell.Current.DisplayAlert("Erro!", Message, "Ok");
                     }
@@ -611,15 +601,6 @@ namespace App_da_Foto.ViewModels
 
                     else
                     {
-                        //StringBuilder stringBuider = new StringBuilder();
-                        //foreach (var dicKey in responseService.Errors)
-                        //{
-                        //    foreach (var message in dicKey.Value)
-                        //    {
-                        //        stringBuider.AppendLine(message);
-                        //    }
-                        //}
-                        //Message = stringBuider.ToString();
                         Message = responseService.Errors.ToString();
                         await Shell.Current.DisplayAlert("Erro!", Message, "Ok");
                     }
@@ -642,84 +623,5 @@ namespace App_da_Foto.ViewModels
             return !String.IsNullOrWhiteSpace(telefone)
                 && !String.IsNullOrWhiteSpace(tipoTelefone);
         }
-
-        private async void OnCancel()
-        {
-            await Shell.Current.GoToAsync("..");
-        }
-
-        public async Task GetPlacesByName(string placeText)
-        {
-            var places = await googleMapsApi.GetPlaces(placeText);
-            var placeResult = places.AutoCompletePlaces;
-            if (placeResult != null && placeResult.Count > 0)
-            {
-                Places = new ObservableCollection<GooglePlaceAutoCompletePrediction>(placeResult);
-            }
-
-            ShowRecentPlaces = (placeResult == null || placeResult.Count == 0);
-        }
-
-        public async Task GetPlacesDetail(GooglePlaceAutoCompletePrediction placeA)
-        {
-            var place = await googleMapsApi.GetPlaceDetails(placeA.PlaceId);
-            if (place != null)
-            {
-                if (_isPickupFocused)
-                {
-                    PickupText = place.Name;
-                    _originLatitud = $"{place.Latitude}";
-                    _originLongitud = $"{place.Longitude}";
-                    _isPickupFocused = false;
-                    FocusOriginCommand.Execute(null);
-                }
-                else
-                {
-                    _destinationLatitud = $"{place.Latitude}";
-                    _destinationLongitud = $"{place.Longitude}";
-
-                    RecentPlaces.Add(placeA);
-
-                    if (_originLatitud == _destinationLatitud && _originLongitud == _destinationLongitud)
-                    {
-                        await App.Current.MainPage.DisplayAlert("Error", "Origin route should be different than destination route", "Ok");
-                    }
-                    else
-                    {
-                        await App.Current.MainPage.Navigation.PopAsync(false);
-                        CleanFields();
-                    }
-
-                }
-            }
-        }
-
-        void CleanFields()
-        {
-            PickupText = OriginText = string.Empty;
-            ShowRecentPlaces = true;
-            PlaceSelected = null;
-        }
-
-        //public async Task GetLocationName(Position position)
-        //{
-        //    try
-        //    {
-        //        var placemarks = await Geocoding.GetPlacemarksAsync(position.Latitude, position.Longitude);
-        //        var placemark = placemarks?.FirstOrDefault();
-        //        if (placemark != null)
-        //        {
-        //            PickupText = placemark.FeatureName;
-        //        }
-        //        else
-        //        {
-        //            PickupText = string.Empty;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Debug.WriteLine(ex.ToString());
-        //    }
-        //}
     }
 }

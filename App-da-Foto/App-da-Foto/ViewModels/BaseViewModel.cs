@@ -1,11 +1,11 @@
 ﻿using app_da_foto.Domain.Model;
 using App_da_Foto.Models;
 using App_da_Foto.Services;
-using Repositories;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 
@@ -32,6 +32,20 @@ namespace App_da_Foto.ViewModels
         {
             get => contatoService;
             set => contatoService = value;
+        }
+
+        FotoService fotoService = new FotoService();
+        public FotoService FotoService
+        {
+            get => fotoService;
+            set => fotoService = value;
+        }
+
+        private Stream iconeLogoStream;
+        public Stream IconeLogoStream
+        {
+            get => iconeLogoStream;
+            set => iconeLogoStream = value;
         }
 
         private ObservableCollection<string> _listaEspecialidade = new ObservableCollection<string>

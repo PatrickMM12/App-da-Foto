@@ -113,16 +113,6 @@ namespace App_da_Foto.ViewModels
                 return;
             await Shell.Current.Navigation.PushPopupAsync(new Loading());
 
-            //var _fotografo = new Fotografo
-            //{
-            //    Nome = fotografo.Nome,
-            //    Especialidade = fotografo.Especialidade,
-            //};
-            //var fotografoPerfil = new FotografoPerfilPage();
-            //fotografoPerfil.BindingContext = fotografo;
-
-            //await Shell.Current.Navigation.PushAsync(fotografoPerfil);
-
             await Shell.Current.GoToAsync($"{nameof(FotografoPerfilPage)}?{nameof(FotografoPerfilViewModel.FotografoId)}={fotografo.Id}");
             
         }

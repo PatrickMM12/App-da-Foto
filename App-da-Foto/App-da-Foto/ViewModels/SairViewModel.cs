@@ -14,7 +14,6 @@ namespace App_da_Foto.ViewModels
             VoltarCommand = new Command(OnVoltarClicked);
         }
 
-
         public Command SairCommand { get; }
         public Command VoltarCommand { get; }
 

@@ -7,11 +7,17 @@ namespace App_da_Foto.ViewModels
 {
     public class SobreViewModel : BaseViewModel
     {
+
+        public Command OpenWebCommand { get; set; }
         public SobreViewModel()
         {
-            Title = "Sobre";
+            OpenWebCommand = new Command(WebCommand);
         }
 
-        public ICommand OpenWebCommand { get; }
+        private async void WebCommand()
+        {
+            Uri uri = new Uri("https://github.com/PatrickMM12/App-da-Foto");
+            await Browser.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
+        }
     }
 }

@@ -47,6 +47,13 @@ namespace App_da_Foto.ViewModels
             set => SetProperty(ref especialidade, value);
         }
 
+        private string endereco;
+        public string Endereco
+        {
+            get => endereco;
+            set => SetProperty(ref endereco, value);
+        }
+
         private string telefone;
         public string Telefone
         {
@@ -69,7 +76,6 @@ namespace App_da_Foto.ViewModels
             InstagramCommand = new Command(OnInstagramCliked);
         }
 
-
         public Command WhatsAppCommand { get; }
         public Command InstagramCommand { get; }
 
@@ -86,60 +92,68 @@ namespace App_da_Foto.ViewModels
                 {
                     Nome = responseService.Data.Fotografo.Nome;
                     Especialidade = responseService.Data.Fotografo.Especialidade;
-
                     Telefone = responseService.Data.Contato.Telefone;
                     Instagram = responseService.Data.Contato.Instagram;
+                    Endereco = responseService.Data.Endereco.Logradouro + ", " + responseService.Data.Endereco.Numero;
                 }
                 else
                 {
                     await Shell.Current.DisplayAlert("Erro!", responseService.StatusCode.ToString() + responseService.Errors.ToString(), "OK");
                 }
-
-                //IEnumerable<Fotografo> fotografos = await FotografoService.ObterFotografos();
-                //_fotografo = fotografos.FirstOrDefault(a => a.Id == FotografoId);
-
-                //foreach (var fotografo in fotografos)
-                //{
-                //    if (fotografo.Id == fotografoId)
-                //        _fotografo = fotografo;
-                //}
-
-                //FotografoId = _fotografo.Id;
-
-                //Nome = _fotografo.Nome;
-                //Especialidade = _fotografo.Especialidade;
-
-                await Shell.Current.Navigation.PopAllPopupAsync();
             }
             catch (Exception erro)
             {
                 await Shell.Current.DisplayAlert("Erro", erro.ToString(), "Ok");
             }
+            finally
+            {
+                await Shell.Current.Navigation.PopAllPopupAsync();
+            }
         }
 
         private async void OnWhatsAppCliked()
         {
+            Analytics.TrackEvent("WhatsApp Clique");
+            await Shell.Current.Navigation.PushPopupAsync(new Loading());
             try
             {
-                Chat.Open(Telefone, "Olá, vim pelo App Da Foto! Me fale um pouco mais sobre seu trabalho!");
+                if (Telefone != null & Telefone != "")
+                {
+                    Chat.Open(Telefone, "Olá, vim pelo App Da Foto! Me fale um pouco mais sobre seu trabalho!");
+                }
+                else
+                {
+                    await Shell.Current.DisplayAlert("Erro!", "Número de WhatsApp não informado", "Ok");
+                }
             }
-            catch (Exception ex)
+            catch
             {
-                await Shell.Current.DisplayAlert("Erro", ex.Message.ToString(), "Ok");
+                await Shell.Current.DisplayAlert("Erro", "WhatsApp não instalado! Instale o WhatsApp e tente novamente!", "Ok");
             }
+            await Shell.Current.Navigation.PopAllPopupAsync();
         }
 
         private async void OnInstagramCliked(object obj)
         {
+            Analytics.TrackEvent("Instagram Clique");
+            await Shell.Current.Navigation.PushPopupAsync(new Loading());
             try
             {
-                Uri uri = new Uri(Instagram);
-                await Browser.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
+                if (Instagram != null & Instagram != "")
+                {
+                    Uri uri = new Uri(Instagram);
+                    await Browser.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
+                }
+                else
+                {
+                    await Shell.Current.DisplayAlert("Erro!", "Link de Instagram não informado", "Ok");
+                }
             }
             catch (Exception ex)
             {
                 await Shell.Current.DisplayAlert("Erro", ex.Message.ToString(), "Ok");
             }
+            await Shell.Current.Navigation.PopAllPopupAsync();
         }
     }
 }

@@ -96,15 +96,6 @@ namespace App_da_Foto.ViewModels
                     }
                     else
                     {
-                        //StringBuilder stringBuider = new StringBuilder();
-                        //foreach (var dicKey in responseService.Errors)
-                        //{
-                        //    foreach (var message in dicKey.Value)
-                        //    {
-                        //        stringBuider.AppendLine(message);
-                        //    }
-                        //}
-                        //Message = stringBuider.ToString();
                         Message = responseService.Errors.ToString();
                         await Shell.Current.DisplayAlert("Erro!", Message, "Ok");
                     }
