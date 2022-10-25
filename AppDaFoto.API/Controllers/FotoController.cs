@@ -25,7 +25,20 @@ namespace Controllers
         [HttpGet("{id}")]
         public IActionResult GetFotoPorId(int id)
         {
-            Foto foto = _fotoRepositorio.BuscarFotoPorId(id);
+            List<Foto> foto = _fotoRepositorio.BuscarFotoPorId(id);
+
+            if (foto == null)
+            {
+                return NotFound();
+            }
+            return new JsonResult(foto);
+        }
+
+        [HttpGet]
+        [Route("perfil/")]
+        public IActionResult GetFotoPerfil(int id)
+        {
+            Foto foto = _fotoRepositorio.BuscarFotoPerfil(id);
 
             if (foto == null)
             {
@@ -37,16 +50,47 @@ namespace Controllers
         [HttpPost]
         public IActionResult AddFoto(Foto foto)
         {
-            _fotoRepositorio.AdicionarFoto(foto);
-
-            return CreatedAtAction(nameof(GetFotoPorId), new { id = foto.Id }, foto);
+            if (foto == null)
+            {
+                return BadRequest(new { errors = $"Foto Vazia!" });
+            }
+            try
+            {
+                int response = _fotoRepositorio.AdicionarFoto(foto);
+                if (response == 0)
+                {
+                    return NotFound(new { errors = $"Foto do Fotografo de id={foto.IdFotografo} não adicionado" });
+                }
+                return CreatedAtAction(nameof(GetFotoPorId), new { id = foto.Id }, foto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = $"Erro: {ex.Message}" });
+            }
         }
 
         [HttpPut("{id}")]
-        public void PutFoto(int id, [FromBody] Foto foto)
+        public IActionResult PutFoto(int id, [FromBody] Foto foto)
         {
             foto.Id = id;
-            _fotoRepositorio.AtualizarFoto(foto);
+
+            if (foto == null)
+            {
+                return BadRequest(new { errors = $"Foto do Fotografo vazia" });
+            }
+            try
+            {
+                int response = _fotoRepositorio.AtualizarFoto(foto);
+                if (response == 0)
+                {
+                    return NotFound(new { errors = $"Foto do Fotografo de id={foto.Fotografo.Id} não atualizado" });
+                }
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = $"Erro: {ex.Message}" });
+            }
         }
 
         [HttpDelete("{id}")]

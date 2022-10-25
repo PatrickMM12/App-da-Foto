@@ -38,16 +38,46 @@ namespace Controllers
         [HttpPost]
         public IActionResult AddContato(Contato contato)
         {
-            _contatoRepositorio.AdicionarContato(contato);
-
-            return CreatedAtAction(nameof(GetContatoPorId), new { id = contato.Id }, contato);
+            if (contato == null)
+            {
+                return BadRequest(new { errors = $"Contato Vazio" });
+            }
+            try
+            {
+                int response = _contatoRepositorio.AdicionarContato(contato);
+                if (response == 0)
+                {
+                    return NotFound(new { errors = $"Contato do Fotografo de id={contato.IdFotografo} não adicionado" });
+                }
+                return CreatedAtAction(nameof(GetContatoPorId), new { id = contato.Id }, contato);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = $"Erro: {ex.Message}" });
+            }
         }
          
         [HttpPut("{id}")]
-        public void PutContato(int id, [FromBody] Contato contato)
+        public IActionResult PutContato(int id, [FromBody] Contato contato)
         {
             contato.Id = id;
-            _contatoRepositorio.AtualizarContato(contato);
+            if (contato == null)
+            {
+                return BadRequest(new { errors = $"Contato do Fotografo de id={id} vazio" });
+            }
+            try
+            {
+                int response = _contatoRepositorio.AtualizarContato(contato);
+                if (response == 0)
+                {
+                    return NotFound(new { errors = $"Contato do Fotografo de id={id} não atualizado" });
+                }
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = $"Erro: {ex.Message}" });
+            }
         }
 
         [HttpDelete("{id}")]

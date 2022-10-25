@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Repositorio;
 using Repositorio.Interfaces;
+using System.Data.SqlClient;
 
 namespace Controllers
 {
@@ -10,57 +11,120 @@ namespace Controllers
     public class FotografoController : ControllerBase
     {
         private readonly IFotografoRepositorio _fotografoRepositorio;
+        private readonly IEnderecoRepositorio _enderecoRepositorio;
+        private readonly IContatoRepositorio _contatoRepositorio;
+        private readonly IFotoRepositorio _fotoRepositorio;
 
         public FotografoController()
         {
             _fotografoRepositorio = new FotografoRepositorio();
+            _enderecoRepositorio = new EnderecoRepositorio();
+            _contatoRepositorio = new ContatoRepositorio();
+            _fotoRepositorio = new FotoRepositorio();
         }
 
-
         [HttpGet]
-        [Route("todos/")]
         public IEnumerable<Fotografo> GetFotografos()
         {
             return _fotografoRepositorio.BuscarTodosFotografos;
         }
 
         [HttpGet]
-        public IActionResult GetFotografo(string email, string senha)
+        [Route("busca/")]
+        public IActionResult GetFotografosBusca(string nome, string especialidade)
         {
-            Fotografo fotografo = _fotografoRepositorio.BuscarFotografo(email, senha);
+            if (nome == "v@zio")
+            {
+                nome = "";
+            }
+            if (especialidade == "v@zio")
+            {
+                especialidade = "";
+            }
 
-            if (fotografo == null)
+            List<Fotografo> fotografos = _fotografoRepositorio.BuscarFotografos(nome, especialidade);
+
+            if (fotografos == null)
             {
                 return NotFound();
             }
-            return new JsonResult(fotografo);
+            return new JsonResult(fotografos);
+        }
+
+        [HttpGet]
+        [Route("login/")]
+        public IActionResult GetFotografoLogin(string email, string senha)
+        {
+            try
+            {
+                Fotografo fotografo = _fotografoRepositorio.BuscarFotografoLogin(email, senha);
+
+                if (fotografo == null)
+                {
+                    return NotFound();
+                }
+                return new JsonResult(fotografo);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = $"Erro: {ex.Message}" });
+            }
         }
 
         [HttpGet("{id}")]
         public IActionResult GetFotografoPorId(int id)
         {
-            Fotografo fotografo = _fotografoRepositorio.BuscarFotografoPorId(id);
-
-            if (fotografo == null)
+            try
             {
-                return NotFound();
+                FotografoCompleto fotografoCompleto = _fotografoRepositorio.BuscarFotografoCompletoPorId(id);
+
+                if (fotografoCompleto == null)
+                {
+                    return NotFound();
+                }
+                return new JsonResult(fotografoCompleto);
             }
-            return new JsonResult(fotografo);
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = $"Erro: {ex.Message}" });
+            }
         }
 
         [HttpPost]
         public IActionResult AddFotografo(Fotografo fotografo)
         {
-            _fotografoRepositorio.AdicionarFotografo(fotografo);
+            int response = _fotografoRepositorio.AdicionarFotografo(fotografo);
 
-            return CreatedAtAction(nameof(GetFotografo), new { email = fotografo.Email, senha = fotografo.Senha }, fotografo);
+            if(response == 0)
+            {
+                return NotFound(new { message = $"Fotografo não cadastrado" });
+            }
+
+            return CreatedAtAction(nameof(GetFotografoLogin), new { email = fotografo.Email, senha = fotografo.Senha }, fotografo);
         }
 
         [HttpPut("{id}")]
-        public void PutFotografo(int id, [FromBody] Fotografo fotografo)
+        public IActionResult PutFotografo(int id, [FromBody] Fotografo fotografo)
         {
             fotografo.Id = id;
-            _fotografoRepositorio.AtualizarFotografo(fotografo);
+            if (fotografo == null)
+            {
+                return BadRequest(new { message = $"Fotografo de id={id} vazio" });
+            }
+            try
+            {
+                int response = _fotografoRepositorio.AtualizarFotografo(fotografo);
+                if (response == 0)
+                {
+                    return NotFound(new { message = $"Fotografo de id={id} não atualizado"});
+                }
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = $"Erro: {ex.Message}" });
+            }
         }
 
         [HttpDelete("{id}")]
