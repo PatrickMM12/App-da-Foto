@@ -9,12 +9,12 @@ namespace Repositorio
 
         public FotografoRepositorio()
         {
-            InicializaDados();
+            
         }
 
         private void InicializaDados()
         {
-            _fotografos = DalHelper.BuscarFotografos();
+            _fotografos = DalHelper.Fotografos();
         }
 
         public IEnumerable<Fotografo> BuscarTodosFotografos
@@ -24,10 +24,15 @@ namespace Repositorio
                 return _fotografos;
             }
         }
-        
-        public Fotografo BuscarFotografo(string email, string senha)
+
+        public List<Fotografo> BuscarFotografos(string nome, string especialidade)
         {
-            return DalHelper.BuscarFotografo(email, senha);
+            return DalHelper.BuscarFotografos(nome, especialidade);
+        }
+
+        public Fotografo BuscarFotografoLogin(string email, string senha)
+        {
+            return DalHelper.BuscarFotografoLogin(email, senha);
         }
 
         public Fotografo BuscarFotografoPorId(int id)
@@ -35,22 +40,27 @@ namespace Repositorio
             return DalHelper.BuscarFotografoPorId(id);
         }
 
-        public void AdicionarFotografo(Fotografo fotografo)
+        public FotografoCompleto BuscarFotografoCompletoPorId(int id)
         {
-            if (fotografo == null)
-            {
-                throw new ArgumentNullException("fotografo");
-            }
-            DalHelper.AdicionarFotografo(fotografo);
+            return DalHelper.BuscarFotografoCompletoPorId(id);
         }
 
-        public void AtualizarFotografo(Fotografo fotografo)
+        public int AdicionarFotografo(Fotografo fotografo)
         {
             if (fotografo == null)
             {
                 throw new ArgumentNullException("fotografo");
             }
-            DalHelper.AtualizarFotografo(fotografo);
+            return DalHelper.AdicionarFotografo(fotografo);
+        }
+
+        public int AtualizarFotografo(Fotografo fotografo)
+        {
+            if (fotografo == null)
+            {
+                throw new ArgumentNullException("fotografo");
+            }
+            return DalHelper.AtualizarFotografo(fotografo);
         }
 
         public void DeletarFotografo(int id)

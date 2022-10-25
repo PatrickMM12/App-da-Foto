@@ -1,4 +1,5 @@
 ﻿using app_da_foto.Domain.Model;
+using App_da_Foto.Models;
 
 namespace Repositorio.Interfaces
 {
@@ -8,9 +9,11 @@ namespace Repositorio.Interfaces
 
         Endereco BuscarEnderecoPorId(int id);
 
-        void AdicionarEndereco(Endereco endereco);
+        List<EnderecoFotografo> BuscarEnderecosPorLocalizacao(double latitudeSul, double latitudeNorte, double longitudeOeste, double longitudeLeste);
 
-        void AtualizarEndereco(Endereco endereco);
+        int AdicionarEndereco(Endereco endereco);
+
+        int AtualizarEndereco(Endereco endereco);
 
         void DeletarEndereco(int id);
     }

@@ -1,4 +1,5 @@
 ﻿using app_da_foto.Domain.Model;
+using App_da_Foto.Models;
 using Repositorio.Interfaces;
 
 namespace Repositorio
@@ -25,27 +26,32 @@ namespace Repositorio
             }
         }
 
+        public List<EnderecoFotografo> BuscarEnderecosPorLocalizacao(double latitudeSul, double latitudeNorte, double longitudeOeste, double longitudeLeste)
+        {
+            return DalHelper.BuscarEnderecosPorLocalizao(latitudeSul, latitudeNorte, longitudeOeste, longitudeLeste);
+        }
+
         public Endereco BuscarEnderecoPorId(int id)
         {
             return DalHelper.BuscarEnderecoPorId(id);
         }
 
-        public void AdicionarEndereco(Endereco endereco)
+        public int AdicionarEndereco(Endereco endereco)
         {
             if (endereco == null)
             {
-                throw new ArgumentNullException("endereco");
+                throw new ArgumentNullException("Endereço Vazio");
             }
-            DalHelper.AdicionarEndereco(endereco);
+            return DalHelper.AdicionarEndereco(endereco);
         }
 
-        public void AtualizarEndereco(Endereco endereco)
+        public int AtualizarEndereco(Endereco endereco)
         {
             if (endereco == null)
             {
-                throw new ArgumentNullException("endereco");
+                throw new ArgumentNullException("Endereço Vazio");
             }
-            DalHelper.AtualizarEndereco(endereco);
+            return DalHelper.AtualizarEndereco(endereco);
         }
 
         public void DeletarEndereco(int id)

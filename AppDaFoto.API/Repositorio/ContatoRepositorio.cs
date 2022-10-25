@@ -9,7 +9,7 @@ namespace Repositorio
 
         public ContatoRepositorio()
         {
-            InicializaDados();
+            
         }
 
         private void InicializaDados()
@@ -30,22 +30,22 @@ namespace Repositorio
             return DalHelper.BuscarContatoPorId(id);
         }
 
-        public void AdicionarContato(Contato contato)
+        public int AdicionarContato(Contato contato)
         {
             if (contato == null)
             {
-                throw new ArgumentNullException("contato");
+                throw new ArgumentNullException("Contato Vazio");
             }
-            DalHelper.AdicionarContato(contato);
+            return DalHelper.AdicionarContato(contato);
         }
 
-        public void AtualizarContato(Contato contato)
+        public int AtualizarContato(Contato contato)
         {
             if (contato == null)
             {
-                throw new ArgumentNullException("contato");
+                throw new ArgumentNullException("Contato Vazio");
             }
-            DalHelper.AtualizarContato(contato);
+            return DalHelper.AtualizarContato(contato);
         }
 
         public void DeletarContato(int id)

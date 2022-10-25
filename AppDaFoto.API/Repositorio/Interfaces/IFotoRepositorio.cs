@@ -6,11 +6,13 @@ namespace Repositorio.Interfaces
     {
         IEnumerable<Foto> BuscarTodasFotos { get; }
 
-        Foto BuscarFotoPorId(int id);
+        List<Foto> BuscarFotoPorId(int id);
 
-        void AdicionarFoto(Foto foto);
+        Foto BuscarFotoPerfil(int id);
 
-        void AtualizarFoto(Foto foto);
+        int AdicionarFoto(Foto foto);
+
+        int AtualizarFoto(Foto foto);
 
         void DeletarFoto(int id);
     }

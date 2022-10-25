@@ -9,7 +9,7 @@ namespace Repositorio
 
         public FotoRepositorio()
         {
-            InicializaDados();
+            
         }
 
         private void InicializaDados()
@@ -25,27 +25,32 @@ namespace Repositorio
             }
         }
 
-        public Foto BuscarFotoPorId(int id)
+        public List<Foto> BuscarFotoPorId(int id)
         {
             return DalHelper.BuscarFotoPorId(id);
         }
 
-        public void AdicionarFoto(Foto foto)
+        public Foto BuscarFotoPerfil(int id)
         {
-            if (foto == null)
-            {
-                throw new ArgumentNullException("foto");
-            }
-            DalHelper.AdicionarFoto(foto);
+            return DalHelper.BuscarFotoPerfil(id);
         }
 
-        public void AtualizarFoto(Foto foto)
+        public int AdicionarFoto(Foto foto)
         {
             if (foto == null)
             {
                 throw new ArgumentNullException("foto");
             }
-            DalHelper.AtualizarFoto(foto);
+            return DalHelper.AdicionarFoto(foto);
+        }
+
+        public int AtualizarFoto(Foto foto)
+        {
+            if (foto == null)
+            {
+                throw new ArgumentNullException("foto");
+            }
+            return DalHelper.AtualizarFoto(foto);
         }
 
         public void DeletarFoto(int id)

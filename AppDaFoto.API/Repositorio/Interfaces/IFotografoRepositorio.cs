@@ -6,13 +6,17 @@ namespace Repositorio.Interfaces
     {
         IEnumerable<Fotografo> BuscarTodosFotografos { get; }
 
+        List<Fotografo> BuscarFotografos(string nome, string especialidade);
+
         Fotografo BuscarFotografoPorId(int id);
 
-        Fotografo BuscarFotografo(string email, string senha);
+        FotografoCompleto BuscarFotografoCompletoPorId(int id);
 
-        void AdicionarFotografo(Fotografo fotografo);
+        Fotografo BuscarFotografoLogin(string email, string senha);
 
-        void AtualizarFotografo(Fotografo fotografo);
+        int AdicionarFotografo(Fotografo fotografo);
+
+        int AtualizarFotografo(Fotografo fotografo);
 
         void DeletarFotografo(int id);
     }

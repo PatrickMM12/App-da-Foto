@@ -8,9 +8,9 @@ namespace Repositorio.Interfaces
 
         Contato BuscarContatoPorId(int id);
 
-        void AdicionarContato(Contato contato);
+        int AdicionarContato(Contato contato);
 
-        void AtualizarContato(Contato contato);
+        int AtualizarContato(Contato contato);
 
         void DeletarContato(int id);
     }
